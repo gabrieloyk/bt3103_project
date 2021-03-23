@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <h1>Trial Run</h1>
         <div id="nav">
             <router-link to="/">Home</router-link> |
             <router-link to="/register">Register</router-link> |
