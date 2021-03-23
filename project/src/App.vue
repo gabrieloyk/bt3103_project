@@ -1,43 +1,59 @@
 <template>
-  <div id="app">
-    <app-header></app-header>
-
-    <!--<router-view></router-view>-->
-
-    <app-footer></app-footer>
-   </div>
+    <div id="app">
+        <div id="nav">
+            <router-link to="/">Home</router-link> |
+            <router-link to="/register">Register</router-link> |
+            <router-link to="/dashboard">Dashboard</router-link> |
+            <button @click="logout">Logout</button>
+        </div>
+        <router-view />
+    </div>
 </template>
 
 <script>
-//Register Locally
-
-import Header from './components/Header.vue'
+import firebase from 'firebase';
 
 export default {
- data(){
-    return{
-      title:'Your first Vue Component',
-      
-    }
-  },
-   methods:{
-     
-   },
-   //Register Locally
-  components:{
-    'app-header':Header,
-    
-  }
-
-}
+    methods: {
+        logout() {
+            firebase
+                .auth()
+                .signOut()
+                .then(() => {
+                    alert('Successfully logged out');
+                    this.$router.push('/');
+                })
+                .catch(error => {
+                    alert(error.message);
+                    this.$router.push('/');
+                });
+        },
+    },
+};
 </script>
-
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;  
-  text-align: center;
-  color: #4c2792be;
-  font-size:14px;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
 }
 
+#nav {
+    padding: 30px;
+}
+
+#nav a {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+    color: #42b983;
+}
+
+input {
+    margin-right: 20px;
+}
 </style>
