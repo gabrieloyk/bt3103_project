@@ -3,8 +3,8 @@
         <router-link to="/">Log In</router-link> |
         <router-link to="/register">Register</router-link> 
             <!--<router-link to="/dashboard">Dashboard</router-link> |-->
-        <form @submit.prevent="register">
-            <h2>Register</h2>
+        <form @submit.prevent="login">
+            <h2>Login</h2>
             <input
                 type="email"
                 placeholder="Email address..."
@@ -15,15 +15,16 @@
                 placeholder="password..."
                 v-model="password"
             />
-            <button type="submit">Register</button>
+            <button type="submit">Login</button>
         </form>
     </div>
 </template>
+
 <script>
 import firebase from 'firebase';
 
 export default {
-    name: 'Register',
+    name: 'LogInPage',
     data() {
         return {
             email: '',
@@ -31,13 +32,13 @@ export default {
         };
     },
     methods: {
-        register() {
+        login() {
             firebase
                 .auth()
-                .createUserWithEmailAndPassword(this.email, this.password)
+                .signInWithEmailAndPassword(this.email, this.password)
                 .then(() => {
-                    alert('Successfully registered! Please login.');
-                    this.$router.push('/');
+                    alert('Successfully logged in');
+                    this.$router.push('/home');
                 })
                 .catch(error => {
                     alert(error.message);

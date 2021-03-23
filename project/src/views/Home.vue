@@ -1,46 +1,42 @@
 <template>
     <div>
-        <form @submit.prevent="login">
-            <h2>Login</h2>
-            <input
-                type="email"
-                placeholder="Email address..."
-                v-model="email"
-            />
-            <input
-                type="password"
-                placeholder="password..."
-                v-model="password"
-            />
-            <button type="submit">Login</button>
-        </form>
+        <app-header></app-header>
+        <p>This page is only visible to users that are currently logged in</p>
     </div>
 </template>
 
 <script>
-import firebase from 'firebase';
+//Register Locally
+
+import Header from '../components/Header.vue'
+//import Footer from './components/Footer.vue'
 
 export default {
-    name: 'Home',
-    data() {
-        return {
-            email: '',
-            password: '',
-        };
-    },
-    methods: {
-        login() {
-            firebase
-                .auth()
-                .signInWithEmailAndPassword(this.email, this.password)
-                .then(() => {
-                    alert('Successfully logged in');
-                    this.$router.push('/dashboard');
-                })
-                .catch(error => {
-                    alert(error.message);
-                });
-        },
-    },
-};
+ data(){
+    return{
+      title:'Your first Vue Component',
+      
+    }
+  },
+   methods:{
+     
+   },
+   //Register Locally
+  components:{
+    'app-header':Header,
+    //'app-footer':Footer
+    
+  }
+
+}
 </script>
+
+<style scoped>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;  
+  text-align: center;
+  color: #4c2792be;
+  font-size:14px;
+}
+
+</style>

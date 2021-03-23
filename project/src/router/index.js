@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
+import LogInPage from '../views/LogInPage.vue';
 import firebase from 'firebase';
 
 Vue.use(VueRouter);
@@ -8,8 +8,8 @@ Vue.use(VueRouter);
 const routes = [
     {
         path: '/',
-        name: 'Home',
-        component: Home,
+        name: 'LogInPage',
+        component: LogInPage,
     },
     {
         path: '/register',
@@ -17,12 +17,13 @@ const routes = [
         component: () =>
             import(/* webpackChunkName: "about" */ '../views/About.vue'),
     },
+    
     {
-        path: '/dashboard',
-        name: 'Dashboard',
+        path: '/home',
+        name: 'Home',
         component: () =>
             import(
-                /* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'
+                /* webpackChunkName: "dashboard" */ '../views/Home.vue'
             ),
         meta: {
             authRequired: true,
