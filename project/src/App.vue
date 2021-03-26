@@ -1,33 +1,16 @@
 <template>
     <div id="app">
-        <div id="nav">
-           
-            <button @click="logout">Logout</button>
-        </div>
-        <router-view />
+        <router-view></router-view>
     </div>
 </template>
 
 <script>
-import firebase from 'firebase';
+
 
 export default {
-    methods: {
-        logout() {
-            firebase
-                .auth()
-                .signOut()
-                .then(() => {
-                    alert('Successfully logged out');
-                    this.$router.push('/');
-                })
-                .catch(error => {
-                    alert(error.message);
-                    this.$router.push('/');
-                });
-        },
-    },
-};
+  
+      
+}
 </script>
 <style>
 #app {

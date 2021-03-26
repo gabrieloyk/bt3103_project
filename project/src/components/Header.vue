@@ -2,43 +2,58 @@
    <div>
     <header>
         <h1>{{ msg }}</h1>
-        <!--
-        <router-link to="/" exact>Home </router-link>
-        <router-link to="/list" exact>List </router-link>
-        <router-link to="/add" exact>Add Item</router-link>
-        <router-link to="/axios" exact>Axios</router-link>-->
+        <router-link to="/home">Home</router-link>
+        <router-link to="/reports">Reports</router-link> 
+        <router-link to="/family">Family</router-link>
+        <button id="logout" @click="logout">Sign Out</button> 
     </header>
     </div>
   
 </template>
 
 <script>
+import firebase from 'firebase';
+
 export default {
-  
   data(){
     return{
         msg: 'Expired?'
         }
-  }
+  },
+  methods: {
+        logout() {
+            firebase
+                .auth()
+                .signOut()
+                .then(() => {
+                    alert('Successfully logged out');
+                    this.$router.push('/');
+                })
+                .catch(error => {
+                    alert(error.message);
+                    this.$router.push('/');
+                });
+        },
+    },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 header{
-    background:rgb(122, 63, 100);
+    background:#ffd300;
     border-style: solid;
     border-color:black;
     border-width: 2px;
-    height: 95px;
+    height: 120px;
     text-align: top;
     font-family: Avenir, Helvetica, Arial, sans-serif;
 }
 h1{
-    color:ivory
+    color:rgb(122, 63, 100)
 }
 a{
-    color: #fff;
+    color: rgb(122, 63, 100);
     text-decoration: none;
     padding: 6px 8px;
     border-radius: 10px;
@@ -46,5 +61,10 @@ a{
 .router-link-active{
     background: #eee;
     color: #444;
+}
+.logout {
+    background: #eee;
+    color: #444;
+
 }
 </style>

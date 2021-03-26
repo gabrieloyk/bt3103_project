@@ -35,7 +35,11 @@ export default {
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(this.email, this.password)
-                .then(() => {
+                .then((cred) => { /*add the user to user collections in firestore*/
+                    firebase.firestore().collection('users').doc(cred.user.uid).set({
+                        email:this.email,
+                        password:this.password
+                    })
                     alert('Successfully registered! Please login.');
                     this.$router.push('/');
                 })

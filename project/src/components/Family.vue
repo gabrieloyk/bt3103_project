@@ -1,32 +1,40 @@
 <template>
-  <div id="app">
-      family
-   </div>
+    <div>
+        <app-header></app-header>
+        <p>This is family page</p>
+    </div>
 </template>
 
 <script>
 //Register Locally
 
+import Header from '../components/Header.vue'
+//import Footer from './components/Footer.vue'
+
 export default {
  data(){
-    
+    return{
+      
+    }
   },
    methods:{
      
    },
    //Register Locally
   components:{
+    'app-header':Header,
+    //'app-footer':Footer
     
   }
 
 }
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;  
   text-align: center;
-  color: #ECCA21;
+  color: #4c2792be;
   font-size:14px;
 }
 
