@@ -2,6 +2,15 @@
     <div>
         <app-header></app-header>
         <p>This page is only visible to users that are currently logged in</p>
+        <div>
+        <ul>
+          <li v-for="item in items" :key="item.id">
+            
+            <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}</p>
+            
+          </li>
+        </ul>
+        </div>
         <button class="open-button" v-on:click="openForm()">Create New Food</button>
         <div class="form-popup" id="myForm">
           <form class="form-container">
@@ -45,6 +54,7 @@ export default {
       price:"",
       username:"",
       imgfile:"",
+      items: [],
     }
   },
    methods:{
@@ -79,7 +89,7 @@ export default {
             createdOn:new Date(),
             userID: firebase.auth().currentUser.uid,
           },
-        ).then(()=>this.reload())
+        ).then(()=> this.reload())
         alert("Document is written successfully")
         this.name=''
         this.expireddate=''
@@ -88,7 +98,22 @@ export default {
         this.submitted = true
         this.snackbar = false
       },
+      fetchItems:function(){
+      firebase.firestore().collection('foods').where("userID","==",firebase.auth().currentUser.uid).onSnapshot((querySnapShot)=>{
+        this.items = [];
+        let item={}
+        querySnapShot.forEach(doc=>{
+            item=doc.data()
+            item.show=false
+            item.id=doc.id
+            item.expiry = doc.data().expireddate.toDate().toString().substring(0,15)
+            this.items.push(item) 
+            })      })    
+        },
    },
+  created(){
+      this.fetchItems()    
+      },
    //Register Locally
   components:{
     'app-header':Header,
