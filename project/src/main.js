@@ -27,7 +27,7 @@ if (!app) {
       created() {
         //redirect if user not logged in
         if (!user) {
-          this.$router.push("/login");
+          this.$router.push("/");
         }
       },
       render: h => h(App)
