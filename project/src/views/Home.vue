@@ -23,7 +23,7 @@
             <input type="file" id="myFile" @change="onFileChange"><br><br>
             <!-- reference: https://codepen.io/Atinux/pen/qOvawK/?editors=1010 to add file using vue-->
 
-            <button type="submit" class="btn" v-on:click="addToFirebase()">Add</button>
+            <button type="submit" class="btn" v-on:click.prevent="addToFirebase()">Add</button>
             <button type="button" class="btn cancel" v-on:click="closeForm()">Close</button>
           </form>
         </div>
@@ -69,26 +69,23 @@ export default {
       reader.readAsDataURL(file);
     },
     addToFirebase() {
-     
         const foodRef = firebase.firestore().collection('foods')
-
         foodRef.add(
           {
             name:this.name,
-            expireddate:this.expireddate,
+            expireddate:new Date(this.expireddate),
             price:this.price,
             username:this.username,
             createdOn:new Date(),
             userID: firebase.auth().currentUser.uid,
           },
-      
-        );
-        
+        ).then(()=>this.reload())
+        alert("Document is written successfully")
         this.name=''
         this.expireddate=''
         this.price=''
         this.username=''
-        this.submitted=true
+        this.submitted = true
         this.snackbar = false
       },
    },
