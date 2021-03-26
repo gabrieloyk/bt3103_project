@@ -1,8 +1,8 @@
 <template>
     <body>
     <div class='div1'>
-        <router-link to="/">Log In</router-link> |
-        <router-link to="/register">Register</router-link> 
+        <router-link to="/" style="color:white">Log In</router-link> |
+        <router-link to="/register" style="color:white">Register</router-link> 
 
         <form @submit.prevent="login" id="form1">
             <h2>Login</h2>
