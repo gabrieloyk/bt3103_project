@@ -29,6 +29,28 @@ const routes = [
             authRequired: true,
         },
     },
+    {
+        path: '/reports',
+        name: 'Reports',
+        component: () =>
+            import(
+                 '../components/Reports.vue'
+            ),
+        meta: {
+            authRequired: true,
+        },
+    },
+    {
+        path: '/family',
+        name: 'Family',
+        component: () =>
+            import(
+                 '../components/Family.vue'
+            ),
+        meta: {
+            authRequired: true,
+        },
+    }
 ];
 
 const router = new VueRouter({
