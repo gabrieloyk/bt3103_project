@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router';
-import firebase from 'firebase/app';
+import router from './router'
+import firebase from 'firebase/app'
 
 var firebaseConfig = {
   apiKey: "AIzaSyAi1vPks9QTuL_2k-BzqqVqYl7BQZD2KBs",
@@ -18,8 +18,19 @@ var database = firebase.firestore();
 export default database;
 
 Vue.config.productionTip = false;
-
-new Vue({
-  router,
-  render: h => h(App),
-}).$mount('#app');
+let app;
+firebase.auth().onAuthStateChanged(async user => {
+if (!app) {
+    //start app
+    app = new Vue({
+      router,
+      created() {
+        //redirect if user not logged in
+        if (!user) {
+          this.$router.push("/login");
+        }
+      },
+      render: h => h(App)
+    }).$mount("#app");
+  }
+});

@@ -4,7 +4,7 @@
         <p>This page is only visible to users that are currently logged in</p>
         <button class="open-button" v-on:click="openForm()">Create New Food</button>
         <div class="form-popup" id="myForm">
-          <form action="/action_page.php" class="form-container">
+          <form class="form-container">
             <h2>What food do you want to add?</h2>
             <label for="food"><b>Name of grocery:</b></label>
             <input v-model="food" type="text" placeholder="Enter food name" required><br>
@@ -23,7 +23,7 @@
             <input type="file" id="myFile" @change="onFileChange"><br><br>
             <!-- reference: https://codepen.io/Atinux/pen/qOvawK/?editors=1010 to add file using vue-->
 
-            <button type="submit" class="btn" >Add</button>
+            <button type="submit" class="btn" v-on:click="addToFirebase()">Add</button>
             <button type="button" class="btn cancel" v-on:click="closeForm()">Close</button>
           </form>
         </div>
@@ -33,7 +33,8 @@
 <script>
 //Register Locally
 
-import Header from '../components/Header.vue'
+import Header from '../components/Header.vue';
+import firebase from 'firebase/app';
 //import Footer from './components/Footer.vue'
 
 export default {
@@ -67,9 +68,9 @@ export default {
       };
       reader.readAsDataURL(file);
     },
-    /*addToFirebase(e) {
-      e.preventDefault()
-        const foodRef = this.$firebaseDatabase.collection('food')
+    addToFirebase() {
+      
+        const foodRef = this.firebase.collection('foods')
         foodRef.add(
           {
             food:this.food,
@@ -77,14 +78,14 @@ export default {
             price:this.price,
             username:this.username,
             createdOn:new Date(),
+            userID: firebase.auth().currentUser.uid,
           },
         )
-        this.name= ''
-        this.email = ''
-        this.message = ''
-        this.submitted = true
-        this.snackbar = false
-      },*/
+        this.food=''
+        this.expireddate=''
+        this.price=''
+        this.username=''
+      },
    },
    //Register Locally
   components:{
