@@ -2,6 +2,17 @@
     <div>
         <app-header></app-header>
         <p>This page is only visible to users that are currently logged in</p>
+        <div>
+          <ul>
+      <li v-for="item in items" :key="item.id">
+        <p id="itemName">{{ item.food }}</p>
+      
+        <p id="price">${{ item.price }}</p>
+      </li>
+    </ul>
+  
+  
+</div>
         <button class="open-button" v-on:click="openForm()">Create New Food</button>
         <div class="form-popup" id="myForm">
           <form action="/action_page.php" class="form-container">
@@ -34,6 +45,7 @@
 //Register Locally
 
 import Header from '../components/Header.vue'
+import firebase from 'firebase'
 //import Footer from './components/Footer.vue'
 
 export default {
@@ -44,7 +56,9 @@ export default {
       price:"",
       username:"",
       imgfile:"",
+      items: [],
     }
+    
   },
    methods:{
     openForm() {
@@ -85,7 +99,20 @@ export default {
         this.submitted = true
         this.snackbar = false
       },*/
+      fetchItems:function(){
+      firebase.firestore().collection('foods').get().then((querySnapShot)=>{
+        let item={}
+        querySnapShot.forEach(doc=>{
+            item=doc.data()
+            item.show=false
+            item.id=doc.id
+            this.items.push(item) 
+            })      })    
+        },
    },
+   created(){
+      this.fetchItems()    
+      },
    //Register Locally
   components:{
     'app-header':Header,
