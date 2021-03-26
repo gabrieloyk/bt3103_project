@@ -6,18 +6,18 @@
         <div class="form-popup" id="myForm">
           <form class="form-container">
             <h2>What food do you want to add?</h2>
-            <label for="food"><b>Name of grocery:</b></label>
-            <input v-model="food" type="text" placeholder="Enter food name" required><br>
+            <label for="name"><b>Name of grocery:</b></label>
+            <input v-model="name" type="text" placeholder="Enter food name" ><br>
 
             <label for="expireddate"><b>Expiry Date:</b></label>
-            <input v-model="expireddate" type="date" required><br><br>
+            <input v-model="expireddate" type="date"><br><br>
 
             <label for="price"><b>Price:</b></label>
             <span> $ <input v-model.number="price" type="number" min="0.00" max="10000.00" step="0.01" />
             </span><br><br>
             
             <label for="username"><b>Name of user:</b></label>
-            <input v-model="username" type="text" placeholder="Enter your name"  required><br>
+            <input v-model="username" type="text" placeholder="Enter your name"><br>
             
             <label for="imgfilename"><b>Upload Image:</b></label>
             <input type="file" id="myFile" @change="onFileChange"><br><br>
@@ -40,7 +40,7 @@ import firebase from 'firebase/app';
 export default {
  data(){
     return{
-      food:"",
+      name:"",
       expireddate:"",
       price:"",
       username:"",
@@ -69,22 +69,27 @@ export default {
       reader.readAsDataURL(file);
     },
     addToFirebase() {
-      
-        const foodRef = this.firebase.collection('foods')
+     
+        const foodRef = firebase.firestore().collection('foods')
+
         foodRef.add(
           {
-            food:this.food,
+            name:this.name,
             expireddate:this.expireddate,
             price:this.price,
             username:this.username,
             createdOn:new Date(),
             userID: firebase.auth().currentUser.uid,
           },
-        )
-        this.food=''
+      
+        );
+        
+        this.name=''
         this.expireddate=''
         this.price=''
         this.username=''
+        this.submitted=true
+        this.snackbar = false
       },
    },
    //Register Locally
