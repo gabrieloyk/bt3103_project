@@ -38,17 +38,17 @@ export default {
     addUserFirebase() {
         const foodRef = firebase.firestore().collection('users')
         const userid = firebase.auth().currentUser.uid
+        
         foodRef.doc(userid).collection("family").doc(this.username).set(
           {
             username:this.username,
             createdOn:new Date(),
           },
-        ).then(()=> this.reload())
-        alert("Document is written successfully")
+          )
+        alert("Document added sucessfully")
         document.getElementById("myForm").style.display = "none";
-        this.$router.push('/users');
         this.username=''
-      },
+    },
     select() {
       this.$router.push('/home');
     }
