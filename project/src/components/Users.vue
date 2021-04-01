@@ -10,7 +10,9 @@
             <h2>New User of Expired?</h2>
             <label for="username"><b>Username:</b></label>
             <input v-model="username" type="text" placeholder="Enter your name/role" ><br>
-            <button class="addIcon" type="submit" v-on:click.prevent="addUserFirebase()"><i class="fas fa-plus-circle"></i><span>Add</span></button>
+            <label for="imgfilename"><b>Upload Profile Picture:</b></label>
+            <upload-pro-pics ref="uploadpropic" v-on:addsrc="addImageSrc" ></upload-pro-pics>
+            <button class="addIcon" type="submit" v-on:click.prevent="addUserFirebase()">Add</button>
             <button type="button" v-on:click="closeForm()">Back</button>
           </form>
         </div>
@@ -21,13 +23,19 @@
 
 <script>
 import firebase from 'firebase/app';
+import UploadProPics from './UploadProPics.vue';
+
 export default {
     name: 'SelectUserPage',
     data() {
         return {
           username:"",
+          imgfile:"",
           family: []
         };
+    },
+    components: {
+      'UploadProPics':UploadProPics,
     },
    methods:{
     openForm() {
@@ -39,10 +47,34 @@ export default {
     next() {
       this.$router.push('/users');
     },
+    addImageSrc(params) {
+      this.imgfile = params.src;
+    },
     addUserFirebase() {
         const foodRef = firebase.firestore().collection('users')
         const userid = firebase.auth().currentUser.uid
-        
+        foodRef.doc(userid).collection('family').doc(this.username)
+        .get().then(doc => {
+          if (doc.exists) {
+            alert('User exists man');
+          } else {
+            foodRef.doc(userid).collection('family').doc(this.username).set({
+              username: this.username,
+              createdOn: new Date(),
+              imgfile: this.imgfile,
+            },
+            )
+            alert('Document added successfully')
+          }
+          document.getElementById("myForm").style.display = "none";
+          this.username = ''
+        })
+        this.removeFile();
+        /*const snapShot = foodRef.doc(userid).collection('family').doc(this.username).get();
+        if (snapShot.exists) {
+          alert('User already exists')
+          return;
+        } else {
         foodRef.doc(userid).collection("family").doc(this.username).set(
           {
             username:this.username,
@@ -52,6 +84,10 @@ export default {
         alert("Document added sucessfully")
         document.getElementById("myForm").style.display = "none";
         this.username=''
+        }*/
+    },
+    removeFile(){
+      this.$refs.uploadpropic.removeAllFiles();
     },
     select() {
       this.$router.push('/home');
@@ -106,6 +142,7 @@ export default {
         padding-top: 5px;
         padding-bottom: 30px;
         background-color: floralwhite;
+        border-radius: 20px;
     }
     input {
         padding : 10px;
@@ -117,7 +154,7 @@ export default {
     }
 
     .familyDiv {
-      display: flex;
+      display: inline-block;
       justfiy-content: center;
       align-items:center;
       flex-wrap: wrap;
@@ -127,9 +164,9 @@ export default {
       height: 10vw;
       min-height: 8.4rem;
       max-height: 20rem;
-      width: 10vw;
-      min-width:20rem;
-      border-radius:0.4rem;
+      width: 10rem;
+
+      border-radius:50%;
       border:none;
       outline:none;
       margin-top: 3rem;
@@ -145,7 +182,7 @@ export default {
     }
 
     .familyDiv .btn:hover{
-      box-shadow: inset 0 0 0 5px red;
+      box-shadow: inset 0 0 0 5px whitesmoke;
     }
 
 </style>
