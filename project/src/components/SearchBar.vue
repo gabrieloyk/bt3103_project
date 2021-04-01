@@ -3,7 +3,7 @@
     <app-header></app-header>
   <div class="search-wrapper">
       <label>Search for existing food:</label><br>
-    <input type="text" v-model="search" placeholder="Search title.."/>
+    <input type="text" v-model="search" placeholder="Search food.."/>
         
   </div>
   <div class="wrapper">
