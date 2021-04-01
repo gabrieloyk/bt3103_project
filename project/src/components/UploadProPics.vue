@@ -1,4 +1,4 @@
-<!-- this component is to upload food picture only, not user profile picture-->
+<!-- this component is to upload pictures for each user-->
 <template>
   <div id="uploadpic">
     <vue-dropzone
@@ -47,21 +47,19 @@ export default {
           contentType: "image/png"
         };
         var storageRef = firebase.storage().ref();
-        var imageRef = storageRef.child(`foods/${imageName}.png`);
+        var imageRef = storageRef.child(`users/${imageName}.png`);
         await imageRef.put(file, metadata);
         var downloadURL = await imageRef.getDownloadURL();
         this.images = { src: downloadURL };
       } catch (error) {
         console.log(error);
       }
-      
       this.$emit('addsrc', this.images);
     },
     removeAllFiles() {
       this.$refs.imgDropZone.removeAllFiles();
     }
   },
-  
 
 };
 </script>
