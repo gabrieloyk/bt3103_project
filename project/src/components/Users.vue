@@ -10,6 +10,8 @@
             <h2>New User of Expired?</h2>
             <label for="username"><b>Username:</b></label>
             <input v-model="username" type="text" placeholder="Enter your name/role" ><br>
+            <label for="imgfilename"><b>Upload Profile Picture:</b></label>
+            <upload-pro-pics ref="uploadpropic" v-on:addsrc="addImageSrc" ></upload-pro-pics>
             <button class="addIcon" type="submit" v-on:click.prevent="addUserFirebase()">Add</button>
             <button type="button" v-on:click="closeForm()">Back</button>
           </form>
@@ -21,13 +23,19 @@
 
 <script>
 import firebase from 'firebase/app';
+import UploadProPics from './UploadProPics.vue';
+
 export default {
     name: 'SelectUserPage',
     data() {
         return {
           username:"",
+          imgfile:"",
           family: []
         };
+    },
+    components: {
+      'UploadProPics':UploadProPics,
     },
    methods:{
     openForm() {
@@ -38,6 +46,9 @@ export default {
     },
     next() {
       this.$router.push('/users');
+    },
+    addImageSrc(params) {
+      this.imgfile = params.src;
     },
     addUserFirebase() {
         const foodRef = firebase.firestore().collection('users')
@@ -50,6 +61,7 @@ export default {
             foodRef.doc(userid).collection('family').doc(this.username).set({
               username: this.username,
               createdOn: new Date(),
+              imgfile: this.imgfile,
             },
             )
             alert('Document added successfully')
@@ -57,6 +69,7 @@ export default {
           document.getElementById("myForm").style.display = "none";
           this.username = ''
         })
+        this.removeFile();
         /*const snapShot = foodRef.doc(userid).collection('family').doc(this.username).get();
         if (snapShot.exists) {
           alert('User already exists')
@@ -72,6 +85,9 @@ export default {
         document.getElementById("myForm").style.display = "none";
         this.username=''
         }*/
+    },
+    removeFile(){
+      this.$refs.uploadpropic.removeAllFiles();
     },
     select() {
       this.$router.push('/home');

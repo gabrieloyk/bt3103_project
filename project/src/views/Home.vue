@@ -29,7 +29,7 @@
             <input v-model="username" type="text" placeholder="Enter your name"><br>
             
             <label for="imgfilename"><b>Upload Image:</b></label>
-            <upload-pics v-on:addsrc="addImageSrc"></upload-pics>
+            <upload-pics ref="uploadfood" v-on:addsrc="addImageSrc"></upload-pics>
 
             <button type="submit" class="btn" v-on:click.prevent="addToFirebase()">Add</button>
             <button type="button" class="btn cancel" v-on:click="closeForm()">Close</button>
@@ -81,6 +81,7 @@ export default {
             imgfile: this.imgfile,
           },
         ).then(()=> this.reload());
+        this.removeFile();
         alert("Document is written successfully")
         this.name=''
         this.expireddate=''
@@ -102,6 +103,9 @@ export default {
             this.items.push(item) 
             })      })    
         },
+      removeFile() {
+        this.$refs.uploadfood.removeAllFiles();
+      }
    },
   created(){
       this.fetchItems()    
