@@ -6,12 +6,20 @@
         
   </div>
   <div class="wrapper">
-    <div class="card" v-for="item in filteredItems"  v-bind:key="item.id">
+    <div class="card" v-for="item in filteredItems"  v-bind:key="item.id" v-on:click="item.show = !item.show">
         <a>
+        <img v-bind:src="item.img"/>
         <b>{{ item.name }}</b>
         <small>expiring on :</small>
         <b>{{ item.expiry }}</b>
         </a>
+        <div v-show="item.show"> 
+            <p> Food item : {{item.name}} </p>
+            <p> Expiring on : {{ item.expiry }} </p>
+            <button> Consume </button>
+            <button> Edit </button>
+            <button> Delete </button>
+        </div>
     </div>
   </div>
 </div>
@@ -39,6 +47,7 @@ import firebase from 'firebase/app';
                 item.show=false
                 item.id=doc.id
                 item.expiry = doc.data().expireddate.toDate().toString().substring(0,15)
+                item.img=doc.data().imgfile
                 this.items.push(item) 
                 })      })
                   
@@ -64,10 +73,10 @@ import firebase from 'firebase/app';
 
 <style scoped>
 html, body {
-  display: flex;
+  display: -moz-grid-line;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  /*flex-direction: column;*/
   margin-top: 16px;
   margin-bottom: 16px;
 }
@@ -99,7 +108,7 @@ input:focus {
 
 .card {
     box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
-    max-width: 200px;
+    max-width: 100%;
     margin: 12px;
     transition: .15s all ease-in-out;
     padding: 10px;
@@ -124,5 +133,8 @@ small {
 label {
     color: darkmagenta;
 }
+img {
+        height: 100px;
+      }
 </style>
 
