@@ -1,5 +1,8 @@
 <template>
     <body>
+    <div class="familyDiv" v-for="member in family" :key="member[0]">
+      <button class="btn"><h2 style="color:black; float:center">{{member[1].username}}</h2></button>
+      </div>
     <div class='div2'>
       <button class="open-button" v-on:click="openForm()">Add new user</button>
         <div class="form-popup" id="myForm">
@@ -7,7 +10,7 @@
             <h2>New User of Expired?</h2>
             <label for="username"><b>Username:</b></label>
             <input v-model="username" type="text" placeholder="Enter your name/role" ><br>
-            <button type="submit" v-on:click.prevent="addUserFirebase()">Add</button>
+            <button class="addIcon" type="submit" v-on:click.prevent="addUserFirebase()"><i class="fas fa-plus-circle"></i><span>Add</span></button>
             <button type="button" v-on:click="closeForm()">Back</button>
           </form>
         </div>
@@ -23,6 +26,7 @@ export default {
     data() {
         return {
           username:"",
+          family: []
         };
     },
    methods:{
@@ -44,15 +48,33 @@ export default {
             username:this.username,
             createdOn:new Date(),
           },
-          )
+          )//.then(()=>location.reload());
         alert("Document added sucessfully")
         document.getElementById("myForm").style.display = "none";
         this.username=''
     },
     select() {
       this.$router.push('/home');
+    },
+
+    addFamily() {
+      //this.family = [];
+      const foodRef = firebase.firestore().collection('users')
+      const userid = firebase.auth().currentUser.uid
+
+      foodRef.doc(userid).collection('family').onSnapshot((member)=> {
+        this.family = [];
+        member.docs.forEach((doc)=> {
+          this.family.push([doc.id, doc.data()]);
+        });
+      });
+      console.log(this.family);
     }
   },
+
+  created: function() {
+    this.addFamily();
+  }
 };
 </script>
 
@@ -93,4 +115,37 @@ export default {
     .form-popup {
       display: none;
     }
+
+    .familyDiv {
+      display: flex;
+      justfiy-content: center;
+      align-items:center;
+      flex-wrap: wrap;
+    }
+
+    .familyDiv .btn {
+      height: 10vw;
+      min-height: 8.4rem;
+      max-height: 20rem;
+      width: 10vw;
+      min-width:20rem;
+      border-radius:0.4rem;
+      border:none;
+      outline:none;
+      margin-top: 3rem;
+      margin-right:2.5rem;
+      position: relative;
+      cursor: pointer;
+      background-repeat:no-repeat;
+      background-size: auto;
+    }
+
+    .familyDiv .btn:nth-child(1) {
+      background-image:url("https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png")
+    }
+
+    .familyDiv .btn:hover{
+      box-shadow: inset 0 0 0 5px red;
+    }
+
 </style>
