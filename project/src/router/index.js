@@ -57,6 +57,17 @@ const routes = [
         meta: {
             authRequired: true,
         },
+    },
+    {
+        path: '/search',
+        name: 'SearchBar',
+        component: () =>
+            import(
+                 '../components/SearchBar.vue'
+            ),
+        meta: {
+            authRequired: true,
+        },
     }
 ];
 

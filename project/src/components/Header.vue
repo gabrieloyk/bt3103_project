@@ -6,6 +6,7 @@
         <router-link to="/reports">Reports</router-link> 
         <router-link to="/family">Family</router-link>
         <button id="logout" @click="logout">Sign Out</button> 
+        <router-link to="/search"> Search... </router-link>
     </header>
     </div>
   

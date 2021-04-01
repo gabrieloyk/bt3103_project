@@ -29,8 +29,7 @@
             <input v-model="username" type="text" placeholder="Enter your name"><br>
             
             <label for="imgfilename"><b>Upload Image:</b></label>
-            <input type="file" id="myFile" @change="onFileChange"><br><br>
-            <!-- reference: https://codepen.io/Atinux/pen/qOvawK/?editors=1010 to add file using vue-->
+            <upload-pics></upload-pics>
 
             <button type="submit" class="btn" v-on:click.prevent="addToFirebase()">Add</button>
             <button type="button" class="btn cancel" v-on:click="closeForm()">Close</button>
@@ -44,6 +43,7 @@
 
 import Header from '../components/Header.vue';
 import firebase from 'firebase/app';
+import UploadPics from '../components/UploadPics.vue';
 //import Footer from './components/Footer.vue'
 
 export default {
@@ -63,20 +63,6 @@ export default {
     },
     closeForm() {
       document.getElementById("myForm").style.display = "none";
-    },
-    onFileChange(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length)
-        return;
-      this.createImage(files[0]);
-    },
-    createImage(file) {
-      var reader = new FileReader();
-
-      reader.onload = (e) => {
-        this.imgfile = e.target.result;
-      };
-      reader.readAsDataURL(file);
     },
     addToFirebase() {
         const foodRef = firebase.firestore().collection('foods')
@@ -117,6 +103,7 @@ export default {
    //Register Locally
   components:{
     'app-header':Header,
+    'UploadPics':UploadPics,
     //'app-footer':Footer
     
   }
@@ -163,6 +150,8 @@ export default {
   max-width: 500px;
   padding: 10px;
   background-color: white;
+  height:500px;
+  overflow-y: auto;
 }
 
 /* Full-width input fields */
