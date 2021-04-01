@@ -28,6 +28,15 @@ const routes = [
         },
     },
     {
+        path: '/users',
+        name: 'Users',
+        component: () =>
+            import( '../components/Users.vue'),
+        meta: {
+            authRequired: true,
+        },
+    },
+    {
         path: '/reports',
         name: 'Reports',
         component: () =>
