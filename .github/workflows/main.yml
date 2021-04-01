@@ -6,6 +6,9 @@ name: Build and Deploy
   pull_request:
     branches:
       - main
+defaults:
+  run:
+    working-directory: project    
 jobs:
   build:
     name: Build
