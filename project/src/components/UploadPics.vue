@@ -30,8 +30,9 @@ export default {
         thumbnailWidth: 150,
         thumbnailHeight: 150,
         addRemoveLinks: false,
+        uploadMultiple: false,
         acceptedFiles: ".jpg, .jpeg, .png",
-        dictDefaultMessage: `<p class='text-default'><i class='fa fa-cloud-upload mr-2'></i> Drag Images or Click Here to Upload</p>
+        dictDefaultMessage: `<p class='text-default'><i class='fa fa-cloud-upload mr-2'></i> Click or Drop to Upload</p>
           <p class="form-text">Allowed Files: .jpg, .jpeg, .png</p>
           `
       },
