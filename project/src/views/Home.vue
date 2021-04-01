@@ -29,7 +29,7 @@
             <input v-model="username" type="text" placeholder="Enter your name"><br>
             
             <label for="imgfilename"><b>Upload Image:</b></label>
-            <upload-pics></upload-pics>
+            <upload-pics v-on:addsrc="addImageSrc"></upload-pics>
 
             <button type="submit" class="btn" v-on:click.prevent="addToFirebase()">Add</button>
             <button type="button" class="btn cancel" v-on:click="closeForm()">Close</button>
@@ -45,6 +45,7 @@ import Header from '../components/Header.vue';
 import firebase from 'firebase/app';
 import UploadPics from '../components/UploadPics.vue';
 //import Footer from './components/Footer.vue'
+
 
 export default {
  data(){
@@ -64,6 +65,9 @@ export default {
     closeForm() {
       document.getElementById("myForm").style.display = "none";
     },
+    addImageSrc(params) {
+      this.imgfile = params.src;
+    },
     addToFirebase() {
         const foodRef = firebase.firestore().collection('foods')
         foodRef.add(
@@ -74,13 +78,15 @@ export default {
             username:this.username,
             createdOn:new Date(),
             userID: firebase.auth().currentUser.uid,
+            imgfile: this.imgfile,
           },
-        ).then(()=> this.reload())
+        ).then(()=> this.reload());
         alert("Document is written successfully")
         this.name=''
         this.expireddate=''
         this.price=''
         this.username=''
+        this.imgfile=''
         this.submitted = true
         this.snackbar = false
       },

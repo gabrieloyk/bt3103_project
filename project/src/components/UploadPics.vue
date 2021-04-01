@@ -6,11 +6,7 @@
       :options="dropzoneOptions"
       @vdropzone-complete="afterComplete"
     ></vue-dropzone>
-    <div v-if="images.length > 0" class="image-div">
-      <div v-for="image in images" :key="image.src">
-        <img :src="image.src" class="image" />
-      </div>
-    </div>
+    
   </div>
 </template>
 
@@ -36,7 +32,7 @@ export default {
           <p class="form-text">Allowed Files: .jpg, .jpeg, .png</p>
           `
       },
-      images: []
+      images: ''
     };
   },
   methods: {
@@ -53,13 +49,15 @@ export default {
         var imageRef = storageRef.child(`foods/${imageName}.png`);
         await imageRef.put(file, metadata);
         var downloadURL = await imageRef.getDownloadURL();
-        this.images.push({ src: downloadURL });
+        this.images = { src: downloadURL };
       } catch (error) {
         console.log(error);
       }
       this.$refs.imgDropZone.removeFile(upload);
+      this.$emit('addsrc', this.images);
     }
-  }
+  },
+
 };
 </script>
 
