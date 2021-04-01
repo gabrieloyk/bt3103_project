@@ -1,58 +1,16 @@
-<!--<template>
-    <div>
-        <app-header></app-header>
-        <p>This is reports page</p>
-    </div>
-</template>
-
-<script>
-//Register Locally
-
-import Header from '../components/Header.vue'
-//import Footer from './components/Footer.vue'
-
-export default {
- data(){
-    return{
-      
-    }
-  },
-   methods:{
-     
-   },
-   //Register Locally
-  components:{
-    'app-header':Header,
-    //'app-footer':Footer
-    
-  }
-
-}
-</script>
-
-<style scoped>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;  
-  text-align: center;
-  color: #4c2792be;
-  font-size:14px;
-}
-
-</style>-->
-
 <template>
-  <div id="app">
+  <div id="uploadpic">
     <vue-dropzone
       ref="imgDropZone"
       id="customdropzone"
       :options="dropzoneOptions"
       @vdropzone-complete="afterComplete"
     ></vue-dropzone>
-    <!--<div v-if="images.length > 0" class="image-div">
+    <div v-if="images.length > 0" class="image-div">
       <div v-for="image in images" :key="image.src">
         <img :src="image.src" class="image" />
-      </div>-
-    </div>-->
+      </div>
+    </div>
   </div>
 </template>
 
@@ -77,7 +35,7 @@ export default {
           <p class="form-text">Allowed Files: .jpg, .jpeg, .png</p>
           `
       },
-      try: []
+      images: []
     };
   },
   methods: {
@@ -94,7 +52,7 @@ export default {
         var imageRef = storageRef.child(`foods/${imageName}.png`);
         await imageRef.put(file, metadata);
         var downloadURL = await imageRef.getDownloadURL();
-        this.try.push({ src: downloadURL });
+        this.images.push({ src: downloadURL });
       } catch (error) {
         console.log(error);
       }
@@ -112,5 +70,8 @@ export default {
 .image {
   max-width: 250px;
   margin: 15px;
+}
+#uploadpic {
+  padding:5px;
 }
 </style>
