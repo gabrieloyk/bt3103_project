@@ -1,7 +1,9 @@
 <template>
     <div>
         <app-header></app-header>
+        {{currentuser}} is using this page
         <p>This page is only visible to users that are currently logged in</p>
+        <transmitter></transmitter>
         <div>
         <ul>
           <li v-for="item in items" :key="item.id">
@@ -44,6 +46,7 @@
 import Header from '../components/Header.vue';
 import firebase from 'firebase/app';
 import UploadPics from '../components/UploadPics.vue';
+
 //import Footer from './components/Footer.vue'
 
 
@@ -56,6 +59,7 @@ export default {
       username:"",
       imgfile:"",
       items: [],
+      currentuser:""
     }
   },
    methods:{
@@ -105,10 +109,15 @@ export default {
         },
       removeFile() {
         this.$refs.uploadfood.removeAllFiles();
+      },
+
+      getUser(currentuser) {
+        this.currentuser = currentuser;
       }
    },
   created(){
-      this.fetchItems()    
+      this.fetchItems(),
+      this.currentuser = this.$route.params.data   
       },
    //Register Locally
   components:{
