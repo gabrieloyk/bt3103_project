@@ -1,7 +1,7 @@
 <template>
     <body>
     <div class="familyDiv" v-for="member in family" :key="member[0]">
-      <button class="btn"><h2 style="color:black; float:center">{{member[1].username}}</h2></button>
+      <button class="btn" @click="currentuser = member[1].username; fn1()" ><h2 style="color:black; float:center">{{member[1].username}}</h2></button>
       </div>
     <div class='div2'>
       <button class="open-button" v-on:click="openForm()">Add new user</button>
@@ -31,7 +31,8 @@ export default {
         return {
           username:"",
           imgfile:"",
-          family: []
+          family: [],
+          currentuser:""
         };
     },
     components: {
@@ -90,7 +91,7 @@ export default {
       this.$refs.uploadpropic.removeAllFiles();
     },
     select() {
-      this.$router.push('/home');
+      this.$router.push({name:"Home", params:{data: this.currentuser}});
     },
 
     addFamily() {
@@ -105,6 +106,10 @@ export default {
         });
       });
       console.log(this.family);
+    },
+
+    fn1() {
+      alert(this.currentuser);
     }
   },
 
@@ -155,7 +160,7 @@ export default {
 
     .familyDiv {
       display: inline-block;
-      justfiy-content: center;
+      justify-content: center;
       align-items:center;
       flex-wrap: wrap;
     }
@@ -183,6 +188,10 @@ export default {
 
     .familyDiv .btn:hover{
       box-shadow: inset 0 0 0 5px whitesmoke;
+    }
+
+    .familyDiv .btn:focus{
+      box-shadow:inset 0 0 0 5px white;
     }
 
 </style>
