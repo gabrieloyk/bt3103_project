@@ -29,7 +29,15 @@
             
             <label for="username"><b>Name of user:</b></label>
             <input v-model="username" type="text" placeholder="Enter your name"><br>
-            
+            <select v-model="category">
+            <option disabled value="">Select category</option>
+              <option>fruits & vegetables</option>
+              <option>meat & seafood</option>
+              <option>dairy & bakery</option>
+              <option>snacks</option>
+              <option>beverage</option>
+              <option>others</option>
+            </select>
             <label for="imgfilename"><b>Upload Image:</b></label>
             <upload-pics ref="uploadfood" v-on:addsrc="addImageSrc"></upload-pics>
 
@@ -58,6 +66,7 @@ export default {
       price:"",
       username:"",
       imgfile:"",
+      category:"",
       items: [],
       currentuser:""
     }
@@ -83,6 +92,7 @@ export default {
             createdOn:new Date(),
             userID: firebase.auth().currentUser.uid,
             imgfile: this.imgfile,
+            category: this.category
           },
         ).then(()=> this.reload());
         this.removeFile();
@@ -92,6 +102,7 @@ export default {
         this.price=''
         this.username=''
         this.imgfile=''
+        this.category =''
         this.submitted = true
         this.snackbar = false
       },
