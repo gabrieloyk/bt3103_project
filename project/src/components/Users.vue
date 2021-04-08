@@ -91,7 +91,8 @@ export default {
       this.$refs.uploadpropic.removeAllFiles();
     },
     select() {
-      this.$router.push({name:"Home", params:{data: this.currentuser}});
+      this.$store.commit("chooseUser",this.currentuser);
+      this.$router.push({name:"Home"});
     },
 
     addFamily() {

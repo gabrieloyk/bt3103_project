@@ -128,7 +128,7 @@ export default {
    },
   created(){
       this.fetchItems(),
-      this.currentuser = this.$route.params.data   
+      this.currentuser = this.$store.state.user.username  
       },
    //Register Locally
   components:{
