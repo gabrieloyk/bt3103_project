@@ -1,7 +1,7 @@
 <template>
     <body>
     <div class="familyDiv" v-for="member in family" :key="member[0]">
-      <button class="btn" @click="currentuser = member[1].username; fn1()" ><h2 style="color:black; float:center">{{member[1].username}}</h2></button>
+      <button class="btn" @click="currentuser = member[1].username;" ><h2 style="color:black; float:center">{{member[1].username}}</h2></button>
       </div>
     <div class='div2'>
       <button class="open-button" v-on:click="openForm()">Add new user</button>
@@ -57,7 +57,7 @@ export default {
         foodRef.doc(userid).collection('family').doc(this.username)
         .get().then(doc => {
           if (doc.exists) {
-            alert('User exists man');
+            alert('User exists');
           } else {
             foodRef.doc(userid).collection('family').doc(this.username).set({
               username: this.username,
@@ -108,10 +108,6 @@ export default {
       });
       console.log(this.family);
     },
-
-    fn1() {
-      alert(this.currentuser);
-    }
   },
 
   created: function() {
