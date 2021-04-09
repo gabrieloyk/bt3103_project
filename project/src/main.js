@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import firebase from 'firebase/app'
+import store from "./store";
 
 var firebaseConfig = {
   apiKey: "AIzaSyAi1vPks9QTuL_2k-BzqqVqYl7BQZD2KBs",
@@ -24,6 +25,7 @@ if (!app) {
     //start app
     app = new Vue({
       router,
+      store,
       created() {
         //redirect if user not logged in
         if (!user) {

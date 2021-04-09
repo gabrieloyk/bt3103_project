@@ -27,8 +27,6 @@
             <span> $ <input v-model.number="price" type="number" min="0.00" max="10000.00" step="0.01" />
             </span><br><br>
             
-            <label for="username"><b>Name of user:</b></label>
-            <input v-model="username" type="text" placeholder="Enter your name"><br>
             <select v-model="category">
             <option disabled value="">Select category</option>
               <option>fruits & vegetables</option>
@@ -64,7 +62,6 @@ export default {
       name:"",
       expireddate:"",
       price:"",
-      username:"",
       imgfile:"",
       category:"",
       items: [],
@@ -88,7 +85,7 @@ export default {
             name:this.name,
             expireddate:new Date(this.expireddate),
             price:this.price,
-            username:this.username,
+            username:this.currentuser,
             createdOn:new Date(),
             userID: firebase.auth().currentUser.uid,
             imgfile: this.imgfile,
@@ -100,7 +97,6 @@ export default {
         this.name=''
         this.expireddate=''
         this.price=''
-        this.username=''
         this.imgfile=''
         this.category =''
         this.submitted = true
@@ -128,7 +124,7 @@ export default {
    },
   created(){
       this.fetchItems(),
-      this.currentuser = this.$route.params.data   
+      this.currentuser = this.$store.state.user.username  
       },
    //Register Locally
   components:{
