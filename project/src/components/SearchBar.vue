@@ -30,6 +30,7 @@
 
 <script>
 import firebase from 'firebase/app';
+import Header from '../components/Header.vue';
 
     export default {
         data() {
@@ -67,6 +68,9 @@ import firebase from 'firebase/app';
                 })
             }
         },
+        components:{
+            'app-header':Header,
+        }
         
     }
 </script>

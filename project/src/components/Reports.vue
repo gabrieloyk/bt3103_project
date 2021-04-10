@@ -1,7 +1,16 @@
-<!--<template>
+<template>
     <div>
         <app-header></app-header>
         <p>This is reports page</p>
+        <div>
+        <ul>
+          <li v-for="item in items" :key="item.id">
+            
+            <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}</p>
+            
+          </li>
+        </ul>
+    </div>
     </div>
 </template>
 
@@ -9,23 +18,47 @@
 //Register Locally
 
 import Header from '../components/Header.vue'
+import firebase from 'firebase/app';
 //import Footer from './components/Footer.vue'
 
 export default {
  data(){
     return{
-      
+      items: [],
+      currentuser:"",
+      expireditems:[],
     }
   },
    methods:{
-     
+     fetchItems:function(){
+      firebase.firestore().collection('foods').where("userID","==",firebase.auth().currentUser.uid).onSnapshot((querySnapShot)=>{
+        this.items = [];
+        this.expireditems = [];
+        let item={}
+        querySnapShot.forEach(doc=>{
+            var today = new Date()
+            item=doc.data()
+            item.show=false
+            item.id=doc.id
+            item.expiry = doc.data().expireddate.toDate().toString().substring(0,15)
+            if(doc.data().expireddate.toDate()-today < 0) {
+              this.expireditems.push(item)
+            } else {
+              this.items.push(item) 
+            }         
+            })      })   
+        },
    },
    //Register Locally
   components:{
     'app-header':Header,
     //'app-footer':Footer
     
-  }
+  },
+  created(){
+      this.fetchItems(),
+      this.currentuser = this.$store.state.user.username  
+  },
 
 }
 </script>
@@ -38,79 +71,5 @@ export default {
   font-size:14px;
 }
 
-</style>-->
-
-<template>
-  <div id="app">
-    <vue-dropzone
-      ref="imgDropZone"
-      id="customdropzone"
-      :options="dropzoneOptions"
-      @vdropzone-complete="afterComplete"
-    ></vue-dropzone>
-    <!--<div v-if="images.length > 0" class="image-div">
-      <div v-for="image in images" :key="image.src">
-        <img :src="image.src" class="image" />
-      </div>-
-    </div>-->
-  </div>
-</template>
-
-<script>
-import firebase from "firebase";
-import vue2Dropzone from "vue2-dropzone";
-import "vue2-dropzone/dist/vue2Dropzone.min.css";
-let uuid = require("uuid");
-export default {
-  components: {
-    vueDropzone: vue2Dropzone
-  },
-  data() {
-    return {
-      dropzoneOptions: {
-        url: "https://httpbin.org/post",
-        thumbnailWidth: 150,
-        thumbnailHeight: 150,
-        addRemoveLinks: false,
-        acceptedFiles: ".jpg, .jpeg, .png",
-        dictDefaultMessage: `<p class='text-default'><i class='fa fa-cloud-upload mr-2'></i> Drag Images or Click Here to Upload</p>
-          <p class="form-text">Allowed Files: .jpg, .jpeg, .png</p>
-          `
-      },
-      try: []
-    };
-  },
-  methods: {
-    async afterComplete(upload) {
-      var imageName = uuid.v1();
-      this.isLoading = true;
-      try {
-        //save image
-        let file = upload;
-        var metadata = {
-          contentType: "image/png"
-        };
-        var storageRef = firebase.storage().ref();
-        var imageRef = storageRef.child(`foods/${imageName}.png`);
-        await imageRef.put(file, metadata);
-        var downloadURL = await imageRef.getDownloadURL();
-        this.try.push({ src: downloadURL });
-      } catch (error) {
-        console.log(error);
-      }
-      this.$refs.imgDropZone.removeFile(upload);
-    }
-  }
-};
-</script>
-
-<style>
-.image-div {
-  display: flex;
-  margin: 25px;
-}
-.image {
-  max-width: 250px;
-  margin: 15px;
-}
 </style>
+

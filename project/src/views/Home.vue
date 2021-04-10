@@ -65,7 +65,7 @@ export default {
       imgfile:"",
       category:"",
       items: [],
-      currentuser:""
+      currentuser:"",
     }
   },
    methods:{
@@ -91,7 +91,7 @@ export default {
             imgfile: this.imgfile,
             category: this.category
           },
-        ).then(()=> this.reload());
+        )
         this.removeFile();
         alert("Document is written successfully")
         this.name=''
@@ -111,8 +111,8 @@ export default {
             item.show=false
             item.id=doc.id
             item.expiry = doc.data().expireddate.toDate().toString().substring(0,15)
-            this.items.push(item) 
-            })      })    
+            this.items.push(item)        
+            })      })   
         },
       removeFile() {
         this.$refs.uploadfood.removeAllFiles();
