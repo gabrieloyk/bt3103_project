@@ -1,16 +1,30 @@
 <template>
     <div>
         <app-header></app-header>
-        <p>This is reports page</p>
-        <div>
-        <ul>
-          <li v-for="item in items" :key="item.id">
+        <div class="section" id="overview">
+          <h2>Overview of Personal Activities This Month</h2>
+          <div class="circular color1">
+            <h1 class="ui-value">$142</h1>
+            <span class="ui-label">Expense</span>
+          </div>
+
+          <div class="circular color2">
+            <h1 class="ui-value">142</h1>
+            <span class="ui-label">Expired Food</span>
+          </div>
+          
+          <div class="circular color3">
+            <h1 class="ui-value">58</h1>
+            <span class="ui-label">Fresh Food</span>
+          </div>
+          
+          <div class="circular color4">
+            <h1 class="ui-value">15</h1>
+            <span class="ui-label">Consumed Food</span>
+          </div>
+
             
-            <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}</p>
-            
-          </li>
-        </ul>
-    </div>
+        </div>
     </div>
 </template>
 
@@ -70,6 +84,52 @@ export default {
   color: #4c2792be;
   font-size:14px;
 }
+.section { text-align:center }
+.circular { 
+  position:relative;
+  display:inline-block; 
+  width:160px; 
+  height:160px; 
+  margin:30px;
+  border-radius:150px; 
+  text-align:center; 
+  font-family: Arial, sans-serif; 
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.8), inset 0 3px 5px rgba(0,0,0,.25); 
+  box-sizing:border-box;
+}
+.color1{
+    border:15px solid #ea7186; 
+    border-bottom-color:#fff ;
+}
+.color2{
+    border:15px solid #f2c76e; 
+    border-bottom-color:#fff 
+}
+.color3{
+    border:15px solid #7a77b9; 
+    border-bottom-color:#fff 
+}
+.color4{
+    border:15px solid #bd9bda; 
+    border-bottom-color:#fff;
+}
+.circular .ui-value {
+  position:absolute; 
+  left:0; 
+  right:0;
+  top:15px;
+  font-size:40px; }
+.circular .ui-label { 
+  position:absolute;
+  left:0;
+  bottom:-10px;
+  width:100%;
+  font-size:14px;
+  text-transform:uppercase; 
+  color:#888; 
+  font-weight:700 }
+
+
 
 </style>
 
