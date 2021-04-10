@@ -3,7 +3,6 @@
         <app-header></app-header>
         {{currentuser}} is using this page
         <p>This page is only visible to users that are currently logged in</p>
-        <transmitter></transmitter>
         <div>
         <ul>
           <li v-for="item in items" :key="item.id">
@@ -129,7 +128,7 @@ export default {
    //Register Locally
   components:{
     'app-header':Header,
-    'UploadPics':UploadPics,
+    'upload-pics':UploadPics,
     //'app-footer':Footer
     
   }
