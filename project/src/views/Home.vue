@@ -87,7 +87,8 @@ export default {
             createdOn:new Date(),
             userID: firebase.auth().currentUser.uid,
             imgfile: this.imgfile,
-            category: this.category
+            category: this.category,
+            consumed: false
           },
         )
         this.removeFile();
