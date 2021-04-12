@@ -18,7 +18,7 @@
           </div>
           
           <div class="circular color4">
-            <h1 class="ui-value">NA</h1>
+            <h1 class="ui-value">{{consumed.length}}</h1>
             <span class="ui-label">Consumed Food</span>
           </div>
             
@@ -37,6 +37,7 @@ export default {
       currentuser:"",
       expireditems:[], //only personal expired items are fethched
       expense:0,
+      consumed:[]
     }
   },
    methods:{
@@ -44,25 +45,21 @@ export default {
       firebase.firestore().collection('foods').where("userID","==",firebase.auth().currentUser.uid)
       .where("username","==", this.currentuser)
       .onSnapshot((querySnapShot)=>{
-        this.items =[];
-        this.expireditems =[];
         let item={}
         querySnapShot.forEach(doc=>{
             var today = new Date()
             item=doc.data()
-            item.show=false
-            item.id=doc.id
-            item.expiry = doc.data().expireddate.toDate().toString().substring(0,15)
-            if(doc.data().createdOn.toDate().getMonth() === today.getMonth()) {
+            if(item.createdOn.toDate().getMonth() === today.getMonth()) {
               this.expense += doc.data().price
-                if(doc.data().expireddate.toDate()-today < 0) {
+                if(item.expired == true && item.consumed == false) {
                     this.expireditems.push(item)
                     console.log(item.name)
-                } else {
-                    this.items.push(item) 
-                    console.log(item.name)
-                }   
-            }
+                } else if(item.consumed == true) {
+                  this.consumed.push(item) 
+               } else {
+                  this.items.push(item)
+               }
+             }
                   
             })      })   
         },

@@ -1,6 +1,6 @@
 <template>
   <div class="chart">
-    <h1>Overview of Family's Expense</h1>
+    <h2>Overview of Family's Expense</h2>
     <bar-chart></bar-chart>
   </div>
 </template>

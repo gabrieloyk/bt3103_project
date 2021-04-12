@@ -1,6 +1,6 @@
 <template>
   <div class="chart">
-    <h1>Overview of Food Status</h1>
+    <h2>Overview of Food Status</h2>
     <pie-chart></pie-chart>
   </div>
 </template>
