@@ -64,6 +64,7 @@ export default {
       category:"",
       items: [],
       currentuser:"",
+      expired:false,
     }
   },
    methods:{
@@ -77,6 +78,9 @@ export default {
       this.imgfile = params.src;
     },
     addToFirebase() {
+        var today = new Date()
+        //to check if user inputted an expired food
+        if(new Date(this.expireddate) - today <0 ) {this.expired=true} 
         const foodRef = firebase.firestore().collection('foods')
         foodRef.add(
           {
@@ -88,7 +92,8 @@ export default {
             userID: firebase.auth().currentUser.uid,
             imgfile: this.imgfile,
             category: this.category,
-            consumed: false
+            consumed: false,
+            expired: this.expired
           },
         )
         this.removeFile();
@@ -100,13 +105,19 @@ export default {
         this.category =''
         this.submitted = true
         this.snackbar = false
+        this.expired = false
       },
       fetchItems:function(){
+      //this function will also update expired state of food in firestore
       firebase.firestore().collection('foods').where("userID","==",firebase.auth().currentUser.uid).onSnapshot((querySnapShot)=>{
         this.items = [];
         let item={}
         querySnapShot.forEach(doc=>{
+            var today = new Date()
             item=doc.data()
+            item.expired= (item.expireddate.toDate() - today < 0) ? true : false 
+            //update expired state in firestore
+            firebase.firestore().collection('foods').doc(doc.id).update({expired:item.expired})
             item.show=false
             item.id=doc.id
             item.expiry = doc.data().expireddate.toDate().toString().substring(0,15)

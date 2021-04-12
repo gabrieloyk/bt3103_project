@@ -8,8 +8,8 @@ export default {
         items:[],
         expireditems:[],
         months:[0, 1, 2, 3], //0: now, 1: last 1 month, 2: last 2 months, 3:last 3 months
-        expired_expense:[0,0,0,0],
-        nonexpired_expense:[0,0,0,0],
+        expired_expense:[0,0,0,0], //state: not consumed and expired
+        nonexpired_expense:[0,0,0,0], //state: consumed
         datacollection: {
             labels: ["This Month", "Last Month", "Last 2 Months", "Last 3 Months"],
             datasets: [
@@ -62,27 +62,28 @@ export default {
             //to be added: check if it is consumed -> only consumed item will be added into the non_expiredexpense!!
             if(today.getFullYear() - doc.data().createdOn.toDate().getFullYear() <=1) {
                 if(itm_month === today.getMonth()) {  //current month
-                    //check if the item has expired 
-                  if(doc.data().expireddate.toDate()-today < 0) {
+                    //check if the item has expired & not consumed
+                  if(doc.data().expireddate.toDate()-today < 0 && doc.data().consumed == false) {
                       this.expired_expense[0] += item.price
                       console.log(this.expired_expense[0])
-                      console.log(item.name + " expired")
-                  } else {
+                      console.log(item.name + " expired & not consumed")
+                    //check if item is consumed, ignore the food item that is not consumed and not expired yet
+                  } else if(doc.data().consumed == true) {
                       this.nonexpired_expense[0] += item.price
                       console.log(this.nonexpired_expense[0])
-                      console.log(item.name + " not expired")
+                      console.log(item.name + " consumed")
                   }   
                 } else if(itm_month === (today.getMonth()+12-1)%12) {  //last month
                     //check if the item has expired 
-                  if(doc.data().expireddate.toDate()-today < 0) {
+                  if(doc.data().expireddate.toDate()-today < 0 && doc.data().consumed == false) {
                       console.log(item.name + "last month")
                       this.expired_expense[1] += item.price
                       console.log(this.expired_expense[1])
-                      console.log(item.name + " expired")
-                  } else {
+                      console.log(item.name + " expired & not consumed")
+                  } else if(doc.data().consumed == true) {
                       this.nonexpired_expense[1] += item.price
                       console.log(this.nonexpired_expense[1])
-                      console.log(item.name + " not expired")
+                      console.log(item.name + " consumed")
                   }   
                 } else if(itm_month === (today.getMonth()+12-2)%12) {  //last two months
                     //check if the item has expired 
@@ -90,22 +91,22 @@ export default {
                   if(doc.data().expireddate.toDate()-today < 0) {
                       this.expired_expense[2] += item.price
                       console.log(this.expired_expense[2])
-                      console.log(item.name + " expired")
-                  } else {
+                      console.log(item.name + " expired & not consumed")
+                  } else if(doc.data().consumed == true) {
                       this.nonexpired_expense[2] += item.price
                       console.log(this.nonexpired_expense[2])
-                      console.log(item.name + " not expired")
+                      console.log(item.name + " consumed")
                   }   
-                } else if (itm_month === (today.getMonth()+12-3)%12) { //last three months
+                } else if (itm_month === (today.getMonth()+12-3)%12 && doc.data().consumed == false) { //last three months
                     console.log(item.name + "last three months")
                     if(doc.data().expireddate.toDate()-today < 0) {
                         this.expired_expense[3] += item.price
                         console.log(this.expired_expense[3])
-                        console.log(item.name + " expired")
-                    } else {
+                        console.log(item.name + " expired & not consumed")
+                    } else if(doc.data().consumed == true){
                         this.nonexpired_expense[3] += item.price
                         console.log(this.nonexpired_expense[3])
-                        console.log(item.name + " not expired")
+                        console.log(item.name + " consumed")
                     }   
                 }
             } 
