@@ -2,8 +2,6 @@
     <div>
         <app-header></app-header>
         {{currentuser}} is using this page
-        <p>This page is only visible to users that are currently logged in</p>
-        <transmitter></transmitter>
         <div>
         <ul>
           <li v-for="item in items" :key="item.id">
@@ -65,7 +63,8 @@ export default {
       imgfile:"",
       category:"",
       items: [],
-      currentuser:""
+      currentuser:"",
+      expired:false,
     }
   },
    methods:{
@@ -79,6 +78,9 @@ export default {
       this.imgfile = params.src;
     },
     addToFirebase() {
+        var today = new Date()
+        //to check if user inputted an expired food
+        if(new Date(this.expireddate) - today <0 ) {this.expired=true} 
         const foodRef = firebase.firestore().collection('foods')
         foodRef.add(
           {
@@ -89,9 +91,11 @@ export default {
             createdOn:new Date(),
             userID: firebase.auth().currentUser.uid,
             imgfile: this.imgfile,
-            category: this.category
+            category: this.category,
+            consumed: false,
+            expired: this.expired
           },
-        ).then(()=> this.reload());
+        )
         this.removeFile();
         alert("Document is written successfully")
         this.name=''
@@ -101,18 +105,24 @@ export default {
         this.category =''
         this.submitted = true
         this.snackbar = false
+        this.expired = false
       },
       fetchItems:function(){
+      //this function will also update expired state of food in firestore
       firebase.firestore().collection('foods').where("userID","==",firebase.auth().currentUser.uid).onSnapshot((querySnapShot)=>{
         this.items = [];
         let item={}
         querySnapShot.forEach(doc=>{
+            var today = new Date()
             item=doc.data()
+            item.expired= (item.expireddate.toDate() - today < 0) ? true : false 
+            //update expired state in firestore
+            firebase.firestore().collection('foods').doc(doc.id).update({expired:item.expired})
             item.show=false
             item.id=doc.id
             item.expiry = doc.data().expireddate.toDate().toString().substring(0,15)
-            this.items.push(item) 
-            })      })    
+            this.items.push(item)        
+            })      })   
         },
       removeFile() {
         this.$refs.uploadfood.removeAllFiles();
@@ -129,7 +139,7 @@ export default {
    //Register Locally
   components:{
     'app-header':Header,
-    'UploadPics':UploadPics,
+    'upload-pics':UploadPics,
     //'app-footer':Footer
     
   }

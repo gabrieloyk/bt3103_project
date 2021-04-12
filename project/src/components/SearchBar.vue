@@ -17,7 +17,7 @@
         <div v-show="item.show"> 
             <p> Food item : {{item.name}} </p>
             <p> Expiring on : {{ item.expiry }} </p>
-            <button> Consume </button>
+            <button v-on:click="consumed(item.id)"> Consume </button>
             <button> Edit </button>
             <button> Delete </button>
         </div>
@@ -30,6 +30,7 @@
 
 <script>
 import firebase from 'firebase/app';
+import Header from '../components/Header.vue';
 
     export default {
         data() {
@@ -53,7 +54,14 @@ import firebase from 'firebase/app';
                 })      })
                   
             },
-            
+            consumed: function(itemId) {
+                
+                firebase.firestore().collection('foods').doc(itemId).update({
+                  consumed:true,
+                }).then(() => {
+                    console.log("Consumed state!");
+                })
+            }
         },
 
         created(){
@@ -67,6 +75,9 @@ import firebase from 'firebase/app';
                 })
             }
         },
+        components:{
+            'app-header':Header,
+        }
         
     }
 </script>
