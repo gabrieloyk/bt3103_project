@@ -4,6 +4,10 @@
         <div class="section" id="overview">
         <personal-statistics></personal-statistics>
         </div>
+        <div class="section" id="overall">
+        <pie></pie>
+        </div>
+        <bar-chart></bar-chart>
     </div>
 </template>
 
@@ -12,6 +16,8 @@
 
 import Header from './Header.vue';
 import PersonalStatistics from './PersonalStatistics.vue';
+import PieChart from '../charts/PieChart.vue';
+import BarChart from '../charts/BarChart.vue';
 //import Footer from './components/Footer.vue'
 
 export default {
@@ -27,6 +33,8 @@ export default {
   components:{
     'app-header':Header,
     'personal-statistics': PersonalStatistics,  
+    'pie':PieChart,
+    'bar-chart': BarChart,
   },
   created(){
       this.currentuser = this.$store.state.user.username  

@@ -2,7 +2,6 @@
     <div>
         <app-header></app-header>
         {{currentuser}} is using this page
-        <p>This page is only visible to users that are currently logged in</p>
         <div>
         <ul>
           <li v-for="item in items" :key="item.id">

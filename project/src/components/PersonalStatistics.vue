@@ -54,13 +54,12 @@ export default {
             item.id=doc.id
             item.expiry = doc.data().expireddate.toDate().toString().substring(0,15)
             if(doc.data().createdOn.toDate().getMonth() === today.getMonth()) {
+              this.expense += doc.data().price
                 if(doc.data().expireddate.toDate()-today < 0) {
                     this.expireditems.push(item)
-                    this.expense += doc.data().price
                     console.log(item.name)
                 } else {
                     this.items.push(item) 
-                    this.expense += doc.data().price
                     console.log(item.name)
                 }   
             }
