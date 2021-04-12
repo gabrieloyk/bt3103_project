@@ -1,7 +1,7 @@
 <template>
   <div class="chart">
     <h2>Overview of Food Status</h2>
-    <pie-chart></pie-chart>
+    <pie-chart id="pie1"></pie-chart>
   </div>
 </template>
 
@@ -10,7 +10,7 @@ import Pie from "./piechart.js";
 
 export default {
   components: {
-    'pie-chart':Pie
+    'pie-chart':Pie,
   }
 };
 </script>

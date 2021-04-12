@@ -4,10 +4,12 @@
         <div class="section" id="overview">
         <personal-statistics></personal-statistics>
         </div>
-        <div class="section" id="overall">
+        <div class="section" id="overall" style="float: left; width: 45%; height: 260px;">
         <pie></pie>
         </div>
-        <bar-chart></bar-chart>
+        <div style="float: left; width: 45%; height: 260px;">
+          <bar-chart></bar-chart>
+        </div>
     </div>
 </template>
 
