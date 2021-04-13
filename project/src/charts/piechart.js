@@ -35,15 +35,14 @@ export default {
         querySnapShot.forEach(doc=>{
             var today = new Date()
             item=doc.data()  
-            if(item.createdOn.toDate().getMonth() === today.getMonth()) {  
-              if(item.expired == true && item.consumed == false) {
-                  this.expireditems.push(item)
-                  console.log(this.expireditems.length)
-              } else if(item.consumed == true) {
+              if(item.expired == false && item.consumed == false) {
+                this.items.push(item) //food that is still fresh and not consumed
+              } else if(item.createdOn.toDate().getMonth() === today.getMonth()) {  
+                if(item.consumed == true) {
                   this.consumed.push(item) 
-              } else {
-                this.items.push(item)
-              }
+                } else if(item.consumed == false && item.expired == true) {
+                  this.expireditems.push(item)
+                }
             }
           })
             this.datacollection.datasets[0].data.push(this.items.length)
