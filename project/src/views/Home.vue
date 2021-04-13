@@ -1,10 +1,10 @@
 <template>
     <div>
         <app-header></app-header>
-        {{currentuser}} is using this page
+        <p> <a id="user">{{currentuser}} </a> <a id="para">is using this page</a></p>
         <div>
         <ul>
-          <li v-for="item in items" :key="item.id">
+          <li id="list" v-for="item in items" :key="item.id">
             
             <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}</p>
             
@@ -227,4 +227,20 @@ export default {
   opacity: 1;
 }
 
+#list {
+  color: lightslategrey;
+  padding: 1px;
+}
+
+#user {
+  color: #b294eb;
+  font-family: Chalkduster, fantasy;
+  font-size: 23px;
+}
+
+#para {
+  font-family: Chalkduster, fantasy;
+  font-size: 18px;
+  color:#555
+}
 </style>
