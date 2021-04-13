@@ -1,6 +1,7 @@
 <template>
     <div>
         <app-header></app-header>
+        <history></history>
         <div class="section" id="overview">
         <personal-statistics></personal-statistics>
         </div>
@@ -22,6 +23,7 @@ import PersonalStatistics from './PersonalStatistics.vue';
 import PieChart from '../charts/PieChart.vue';
 import BarChart from '../charts/BarChart.vue';
 import Doughnut from '../charts/Doughnut.vue';
+import History from '../components/History.vue';
 //import Footer from './components/Footer.vue'
 
 export default {
@@ -40,6 +42,7 @@ export default {
     'pie':PieChart,
     'bar-chart': BarChart,
     'doughnut':Doughnut,
+    'history' :History,
   },
   created(){
       this.currentuser = this.$store.state.user.username  
