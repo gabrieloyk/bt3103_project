@@ -6,6 +6,7 @@
         </div>
         <div class="section" id="overall" style="float: left; width: 45%; height: 260px;">
         <pie></pie>
+        <doughnut></doughnut>
         </div>
         <div style="float: left; width: 45%; height: 260px;">
           <bar-chart></bar-chart>
@@ -20,6 +21,8 @@ import Header from './Header.vue';
 import PersonalStatistics from './PersonalStatistics.vue';
 import PieChart from '../charts/PieChart.vue';
 import BarChart from '../charts/BarChart.vue';
+import Doughnut from '../charts/Doughnut.vue';
+
 //import Footer from './components/Footer.vue'
 
 export default {
@@ -37,6 +40,7 @@ export default {
     'personal-statistics': PersonalStatistics,  
     'pie':PieChart,
     'bar-chart': BarChart,
+    'doughnut':Doughnut,
   },
   created(){
       this.currentuser = this.$store.state.user.username  

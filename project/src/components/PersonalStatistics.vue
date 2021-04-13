@@ -97,11 +97,11 @@ export default {
     border-bottom-color:#fff ;
 }
 .color2{
-    border:15px solid #f2c76e; 
+    border:15px solid #7a77b9; 
     border-bottom-color:#fff 
 }
 .color3{
-    border:15px solid #7a77b9; 
+    border:15px solid #f2c76e; 
     border-bottom-color:#fff 
 }
 .color4{
