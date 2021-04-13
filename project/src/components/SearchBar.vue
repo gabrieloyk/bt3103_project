@@ -19,7 +19,7 @@
             <p> Expiring on : {{ item.expiry }} </p>
             <button v-on:click="consumed(item.id)"> Consume </button>
             <button> Edit </button>
-            <button> Delete </button>
+            <button v-on:click="deleteFood(item.id)"> Delete </button>
         </div>
     </div>
   </div>
@@ -61,6 +61,9 @@ import Header from '../components/Header.vue';
                 }).then(() => {
                     console.log("Consumed state!");
                 })
+            },
+            deleteFood: function(itemId) {
+                firebase.firestore().collection('foods').doc(itemId).delete().then(() => {location.reload()});
             }
         },
 
