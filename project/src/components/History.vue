@@ -34,14 +34,15 @@ export default {
       fetchItems:function(){
       //this function will also update expired state of food in firestore
       firebase.firestore().collection('foods').where("userID","==",firebase.auth().currentUser.uid).onSnapshot((querySnapShot)=>{
-        querySnapShot.forEach(doc=>{
+        this.history = []
             let item = {}
+        querySnapShot.forEach(doc=>{      
             var today = new Date()
             item=doc.data()
             var itm_created = item.createdOn.toDate()
             var dayDiff = this.datediff(itm_created,today)
             if(dayDiff <= 3)   { //add item that is created within last three days
-                if(dayDiff <0) {
+                if(dayDiff ==0) {
                     item.temp = "today"
                 } else if(dayDiff == 1) {
                     item.temp = "one day ago"
