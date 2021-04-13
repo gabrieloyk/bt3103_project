@@ -1,6 +1,8 @@
 <template>
     <div>
         <app-header></app-header>
+        <history></history>
+        <div id="content">
         {{currentuser}} is using this page
         <div>
         <ul>
@@ -40,6 +42,7 @@
             <button type="submit" class="btn" v-on:click.prevent="addToFirebase()">Add</button>
             <button type="button" class="btn cancel" v-on:click="closeForm()">Close</button>
           </form>
+          </div>
         </div>
     </div>
 </template>
@@ -50,6 +53,7 @@
 import Header from '../components/Header.vue';
 import firebase from 'firebase/app';
 import UploadPics from '../components/UploadPics.vue';
+import History from '../components/History.vue';
 
 //import Footer from './components/Footer.vue'
 
@@ -140,7 +144,8 @@ export default {
   components:{
     'app-header':Header,
     'upload-pics':UploadPics,
-    //'app-footer':Footer
+    //'app-footer':Footer,
+    'history' :History,
     
   }
 
@@ -227,4 +232,9 @@ export default {
   opacity: 1;
 }
 
+#content {
+  width:80%;
+  float: right;
+  padding: 20px;
+}
 </style>
