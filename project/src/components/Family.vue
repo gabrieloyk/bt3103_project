@@ -12,10 +12,11 @@
             </a>
             <div v-show="profile.show">
               <button v-on:click="selected = profile.username" class="btn">Select</button>
-              <button class="btn">Delete</button>
+              <button v-on:click="deleteProfile(profile.id)" class="btn">Delete</button>
             </div>
           </div>
         </div>
+        <button v-on:click="confirm()" class="btn">Confirm</button>
     </div>
 </template>
 
@@ -42,10 +43,26 @@ export default {
          querySnapShot.docs.forEach((doc) =>{
            profile = doc.data()
            profile.show = false
+           profile.id = doc.id
            this.profiles.push(profile)
          })
        })
      },
+
+     deleteProfile(profileid) {
+       const userid = firebase.auth().currentUser.uid
+       firebase.firestore().collection('users').doc(userid).collection('family').doc(profileid).delete()
+       .then(()=> {location.reload()});
+     },
+
+     confirm() {
+       if (this.selected === null) {
+         alert("No User Selected")
+       } else {
+         this.$store.commit("chooseUser",this.selected);
+         this.$router.push({name:"Home"});
+       }
+     }
 
    },
 

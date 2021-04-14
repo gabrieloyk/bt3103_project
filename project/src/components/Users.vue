@@ -1,7 +1,10 @@
 <template>
     <body>
     <div class="familyDiv" v-for="member in family" :key="member[0]">
-      <button class="btn" @click="currentuser = member[1].username;" ><h2 style="color:black; float:center">{{member[1].username}}</h2></button>
+      <button class="btn" @click="currentuser = member[1].username;" v-bind:style="{ 'background-image': 'url(' + member[1].imgfile + ')',
+      'background-size':'cover','background-position':'center'}">
+        <h2 style="color:white; float:center">{{member[1].username}}</h2>
+        </button>
       </div>
     <div class='div2'>
       <button class="open-button" v-on:click="openForm()">Add new user</button>
@@ -163,7 +166,7 @@ export default {
     }
 
     .familyDiv .btn {
-      height: 10vw;
+      height: 10vh;
       min-height: 8.4rem;
       max-height: 20rem;
       width: 10rem;
@@ -180,7 +183,8 @@ export default {
     }
 
     .familyDiv .btn:nth-child(1) {
-      background-image:url("https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png")
+      /*background-image:url("https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png");*/
+
     }
 
     .familyDiv .btn:hover{
