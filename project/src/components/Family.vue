@@ -3,13 +3,14 @@
         <app-header></app-header>
         <p>This is family page</p>
         <div class="wrapper">
-          <div class="card" v-for="profile in profiles" v-bind:key="profile.username" v-on:click="profile.show = !profile.show,selected = profile.id"
+          <div class="card" v-for="profile in profiles" v-bind:key="profile.username" v-on:dblclick="profile.show = !profile.show" v-on:click="selected = profile.id"
           :class="{active:profile.id === selected}">
             <a>
             <img v-bind:src="profile.imgfile"/>
             <br>
             <b>{{profile.username}}</b>
             </a>
+
             <div v-show="profile.show">
               <button v-on:click="deleteProfile(profile.id)" class="btn">Delete</button>
               <br>
@@ -22,8 +23,8 @@
             <h2>Edit Profile Pic</h2>
             <label for="imgfilename"><b>New Profile Pic:</b></label>
             <upload-pro-pics ref="uploadpropic" v-on:addsrc="addImageSrc" ></upload-pro-pics>
-            <button class='btn' v-on:click="updateProf(selected)">Update</button>
-            <button class="btn" v-on:click="edit=false">Back</button>
+            <button class='btn' v-on:click.prevent="updateProf(selected)">Update</button>
+            <button class="btn" v-on:click.prevent="edit=false">Back</button>
           </form>
         </div>
         <button id="confirmButton" v-on:click="confirm()" class="btn">Confirm</button>
@@ -86,9 +87,13 @@ export default {
       },
 
       updateProf(profid) {
+        if (this.imgfile == '') {
+          alert("Please upload a profile pic")
+        } else {
         const userid = firebase.auth().currentUser.uid
         firebase.firestore().collection('users').doc(userid).collection('family').doc(profid)
         .update({imgfile: this.imgfile})
+        }
       }
 
 
@@ -186,5 +191,11 @@ a {
   width:100px;
   margin-right: 30px;
 }
+
+#edit {
+  display:none;
+}
+
+
 
 </style>
