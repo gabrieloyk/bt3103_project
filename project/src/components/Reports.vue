@@ -10,6 +10,7 @@
         </div>
         <div style="float: left; width: 45%; height: 260px;">
           <bar-chart></bar-chart>
+          <pie-contributor></pie-contributor>
         </div>
     </div>
 </template>
@@ -22,6 +23,7 @@ import PersonalStatistics from './PersonalStatistics.vue';
 import PieChart from '../charts/PieChart.vue';
 import BarChart from '../charts/BarChart.vue';
 import Doughnut from '../charts/Doughnut.vue';
+import PieContributor from '../charts/PieContributor.vue';
 
 //import Footer from './components/Footer.vue'
 
@@ -41,6 +43,7 @@ export default {
     'pie':PieChart,
     'bar-chart': BarChart,
     'doughnut':Doughnut,
+    'pie-contributor':PieContributor
   },
   created(){
       this.currentuser = this.$store.state.user.username  
