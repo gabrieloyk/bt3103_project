@@ -95,9 +95,10 @@ import Header from '../components/Header.vue';
                 
                 firebase.firestore().collection('foods').doc(itemId).update({
                   consumed:true,
+                  consumedDate:new Date(),
                 }).then(() => {
                     console.log("Consumed state!");
-                })
+                })           
             },
             deleteFood: function(itemId) {
                 firebase.firestore().collection('foods').doc(itemId).delete().then(() => {location.reload()});

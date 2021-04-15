@@ -68,7 +68,7 @@ export default {
 <style scoped>
 aside {
     height:800px;
-    background: #e1e1e1;
+    background: rgb(255, 246, 230);
     box-sizing: border-box;
     box-shadow: 8px 0px 16px -8px hsla(197, 37, 24, .5);
     display: flex; 
@@ -77,6 +77,8 @@ aside {
     padding: 20px 5px;
     width: 20%;
     float:left;
+    border-color: #b294eb;
+    border-width: 9px;
 }
 
 .purple { border-left: 5px solid #7a77b9; }
@@ -85,7 +87,7 @@ li {
   width: 18%px; 
   height: 50px;  
   margin: 0 0 20px 0; 
-  background: #d9d9d8 97% center no-repeat;
+  background: #f0ecec 97% center no-repeat;
   font-size: 15px;
   color: #333;
   padding: 5px 0 0 20px;

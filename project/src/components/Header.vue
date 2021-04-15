@@ -48,8 +48,7 @@ header{
     background: rgb(253, 235, 203);
     border-style: solid;
     border-color: #b294eb;
-    border-width: 9px;
-    border-radius: 5pc;
+    border-width: 7px;
     height: 230px;
     text-align: top;
     font-family: Impact, fantasy;

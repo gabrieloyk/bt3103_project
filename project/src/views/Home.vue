@@ -97,7 +97,8 @@ export default {
             imgfile: this.imgfile,
             category: this.category,
             consumed: false,
-            expired: this.expired
+            expired: this.expired,
+            consumedDate: new Date()
           },
         )
         this.removeFile();
