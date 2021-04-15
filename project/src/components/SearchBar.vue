@@ -10,7 +10,7 @@
         </select>
   <button class="view" v-on:click="chooseCat()"> View </button>
   <div class="search-wrapper">
-    <br>  
+    <br>
     <input type="text" v-model="search" placeholder="Search food.."/>
   </div>
   
@@ -72,7 +72,7 @@ import Header from '../components/Header.vue';
                 search : '',
                 items: [],
                 expired: false,
-                existing: false,
+                existing: true,
                 consume: false,
             }
         },
@@ -182,11 +182,11 @@ input:focus {
   }
 
 .card {
-    box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+    box-shadow: rgba(155, 10, 140, 0.118) 0px 1px 6px, rgba(209, 114, 212, 0.118) 0px 1px 4px;
     max-width: 100%;
     margin: 12px;
     transition: .15s all ease-in-out;
-    padding: 10px;
+    padding: 20px;
 }
 .card:hover {
     transform: scale(1.1);
@@ -222,6 +222,11 @@ img {
     padding: 5px;
     margin-left: 5px;
     border-radius: 5px;
+}
+#category {
+    color: rgb(80, 36, 80);
+    font-size: 15px;
+    padding: 5px;
 }
 
 </style>
