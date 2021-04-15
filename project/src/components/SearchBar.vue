@@ -87,7 +87,7 @@ import Header from '../components/Header.vue';
                 item.id=doc.id
                 item.expiry = doc.data().expireddate.toDate().toString().substring(0,15)
                 item.img=doc.data().imgfile
-                this.items.push(item) 
+                this.items.push(item)
                 })      })
                   
             },
