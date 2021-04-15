@@ -68,7 +68,9 @@ const routes = [
         meta: {
             authRequired: true,
         },
-    }
+
+    },
+
 ];
 
 const router = new VueRouter({

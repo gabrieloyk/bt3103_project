@@ -56,13 +56,13 @@ export default {
         querySnapShot.forEach(doc=>{
             var today = new Date()
             item=doc.data()
-            var itm_month = doc.data().createdOn.toDate().getMonth()   
+            var itm_month = item.createdOn.toDate().getMonth()//doc.data().createdOn.toDate().getMonth()   
             //to be added: check if it is consumed -> only consumed item will be added into the non_expiredexpense!!
-            if(today.getFullYear() - doc.data().createdOn.toDate().getFullYear() <=1) {
+            if(today.getFullYear() - item.createdOn.toDate().getFullYear() <=1) {
                 if(itm_month === today.getMonth()) {  //current month
                     //check if the item has expired & not consumed
                   this.monthly_expense[0] += item.price
-                  if(doc.data().expired == true && doc.data().consumed == false) {
+                  if(item.expired == true && doc.data().consumed == false) {
                       this.expired_expense[0] += item.price
                       console.log(this.expired_expense[0])
                       console.log(item.name + " expired & not consumed")
@@ -71,7 +71,7 @@ export default {
                 } else if(itm_month === (today.getMonth()+12-1)%12) {  //last month
                   this.monthly_expense[1] += item.price
                     //check if the item has expired 
-                  if(doc.data().expired === true && doc.data().consumed === false) {
+                  if(item.expired === true && item.consumed === false) {
                       console.log(item.name + "last month")
                       this.expired_expense[1] += item.price
                       console.log(this.expired_expense[1])
@@ -81,7 +81,7 @@ export default {
                   this.monthly_expense[2] += item.price
                     //check if the item has expired 
                     console.log(item.name + "last two months")
-                  if(doc.data().expired == true && doc.data().consumed == false) {
+                  if(item.expired == true && item.consumed == false) {
                       this.expired_expense[2] += item.price
                       console.log(this.expired_expense[2])
                       console.log(item.name + " expired & not consumed")
@@ -89,7 +89,7 @@ export default {
                 } else if (itm_month === (today.getMonth()+12-3)%12) { //last three months
                   this.monthly_expense[3] += item.price  
                   console.log(item.name + "last three months")
-                    if(doc.data().expired == true && doc.data().consumed == false) {
+                    if(item.expired == true && item.consumed == false) {
                         this.expired_expense[3] += item.price
                         console.log(this.expired_expense[3])
                         console.log(item.name + " expired & not consumed")
