@@ -3,20 +3,30 @@
         <app-header></app-header>
         <p>This is family page</p>
         <div class="wrapper">
-          <div class="card" v-for="profile in profiles" v-bind:key="profile.username" v-on:click="profile.show = !profile.show"
-          :class="{active:profile.username === selected}">
+          <div class="card" v-for="profile in profiles" v-bind:key="profile.username" v-on:click="profile.show = !profile.show,selected = profile.id"
+          :class="{active:profile.id === selected}">
             <a>
             <img v-bind:src="profile.imgfile"/>
             <br>
             <b>{{profile.username}}</b>
             </a>
             <div v-show="profile.show">
-              <button v-on:click="selected = profile.username" class="btn">Select</button>
               <button v-on:click="deleteProfile(profile.id)" class="btn">Delete</button>
+              <br>
+              <button v-on:click="edit=true" class="btn">Edit Pic</button>
             </div>
           </div>
         </div>
-        <button v-on:click="confirm()" class="btn">Confirm</button>
+        <div v-show="edit">
+          <form>
+            <h2>Edit Profile Pic</h2>
+            <label for="imgfilename"><b>New Profile Pic:</b></label>
+            <upload-pro-pics ref="uploadpropic" v-on:addsrc="addImageSrc" ></upload-pro-pics>
+            <button class='btn' v-on:click="updateProf(selected)">Update</button>
+            <button class="btn" v-on:click="edit=false">Back</button>
+          </form>
+        </div>
+        <button id="confirmButton" v-on:click="confirm()" class="btn">Confirm</button>
     </div>
 </template>
 
@@ -25,13 +35,16 @@
 
 import Header from '../components/Header.vue'
 import firebase from 'firebase/app'
+import UploadProPics from './UploadProPics.vue';
 //import Footer from './components/Footer.vue'
 
 export default {
  data(){
     return{
       profiles: [],
-      selected: null
+      selected: null,
+      edit: false,
+      imgfile:''
     }
   },
    methods:{
@@ -50,9 +63,13 @@ export default {
      },
 
      deleteProfile(profileid) {
+       if (profileid === this.$store.state.user.username) {
+         this.$store.commit("chooseUser",'')
+       } else {
        const userid = firebase.auth().currentUser.uid
        firebase.firestore().collection('users').doc(userid).collection('family').doc(profileid).delete()
        .then(()=> {location.reload()});
+       }
      },
 
      confirm() {
@@ -62,7 +79,18 @@ export default {
          this.$store.commit("chooseUser",this.selected);
          this.$router.push({name:"Home"});
        }
-     }
+     },
+
+      addImageSrc(params) {
+        this.imgfile = params.src;
+      },
+
+      updateProf(profid) {
+        const userid = firebase.auth().currentUser.uid
+        firebase.firestore().collection('users').doc(userid).collection('family').doc(profid)
+        .update({imgfile: this.imgfile})
+      }
+
 
    },
 
@@ -73,6 +101,7 @@ export default {
    //Register Locally
   components:{
     'app-header':Header,
+    'UploadProPics':UploadProPics,
     //'app-footer':Footer
     
   }
@@ -147,6 +176,15 @@ a {
   background-color:#b294eb;
   color:white;
   border-radius:10px;
+}
+
+#confirmButton {
+  float:right;
+  text-align: center;
+  font-size: 24px;
+  height:50px;
+  width:100px;
+  margin-right: 30px;
 }
 
 </style>
