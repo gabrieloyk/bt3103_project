@@ -182,11 +182,6 @@ export default {
       background-size: auto;
     }
 
-    .familyDiv .btn:nth-child(1) {
-      /*background-image:url("https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png");*/
-
-    }
-
     .familyDiv .btn:hover{
       box-shadow: inset 0 0 0 5px whitesmoke;
     }
