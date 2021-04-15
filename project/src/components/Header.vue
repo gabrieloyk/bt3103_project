@@ -7,6 +7,7 @@
         <router-link to="/reports">Reports</router-link> 
         <router-link to="/family">Family</router-link>
         <router-link to="/search"> Search... </router-link>
+        <router-link to="/aboutus"> About us </router-link>
         <button id="button" @click="logout">Sign Out</button> 
     </header>
     </div>
