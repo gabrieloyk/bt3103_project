@@ -6,7 +6,7 @@
         <p> <a id="user">{{currentuser}} </a> <a id="para">is using this page</a></p>
         <div>
         <ul>
-          <li id="list" v-for="item in items" :key="item.id">
+          <li id="list" v-for="item in items" :key="item.id" v-show="!item.consumed">
             
             <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}</p>
             
