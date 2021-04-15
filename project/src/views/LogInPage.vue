@@ -5,6 +5,7 @@
         <router-link to="/register" style="color:white">Register</router-link> 
 
         <form @submit.prevent="login" id="form1">
+            <h1>Welcome to "Expired?"!</h1>
             <h2>Login</h2>
             <input
                 type="email"
@@ -84,5 +85,8 @@ export default {
         padding : 10px;
         border-radius: 5em;
         border-color: rgb(197, 141, 141);
+    }
+    h1 {
+        color: #9C27B0;
     }
 </style>

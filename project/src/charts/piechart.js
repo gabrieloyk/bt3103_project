@@ -43,12 +43,11 @@ export default {
                 } else if(item.consumed == false && item.expired == true) {
                   this.expireditems.push(item)
                 }
-            }
-          })
+            }})
             this.datacollection.datasets[0].data.push(this.items.length)
             this.datacollection.datasets[0].data.push(this.expireditems.length)
             this.datacollection.datasets[0].data.push(this.consumed.length)
-            this.renderChart(this.datacollection, this.options)
+            this.renderChart(this.datacollection, this.options)   
           })
             
       
