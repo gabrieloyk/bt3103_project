@@ -11,7 +11,7 @@
   <button class="view" v-on:click="chooseCat()"> View </button>
   <div class="search-wrapper">
     <br>
-    <input type="text" v-model="search" placeholder="Search food.."/>
+    <input type="text" v-model="search" placeholder="Search food or category"/>
   </div>
   
   <div>
@@ -129,7 +129,7 @@ import Header from '../components/Header.vue';
         computed: {
             filteredItems:function() {
                 return this.items.filter(item => {
-                    return item.name.toLowerCase().includes(this.search.toLowerCase())
+                    return (item.name.toLowerCase().includes(this.search.toLowerCase()) || item.category.toLowerCase().includes(this.search.toLowerCase()))
                 })
             }
         },

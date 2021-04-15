@@ -48,7 +48,7 @@ export default {
 header{
     background: rgb(253, 235, 203);
     border-style: solid;
-    border-color: #b294eb;
+    border-color: #b796dd;
     border-width: 7px;
     height: 230px;
     text-align: top;
