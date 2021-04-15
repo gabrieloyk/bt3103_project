@@ -1,13 +1,46 @@
 <template>
 <div id="app">
     <app-header></app-header>
+    <br>
+    <label class="dropdown">See existing/consumed/expired:</label>
+        <select id="category" name="category">
+            <option value="existing">Existing Food</option>
+            <option value="consume">Consumed Food</option>
+            <option value="expired">Expired Food</option>
+        </select>
+  <button class="view" v-on:click="chooseCat()"> View </button>
   <div class="search-wrapper">
-      <label>Search for existing food:</label><br>
+    <br>  
     <input type="text" v-model="search" placeholder="Search food.."/>
-        
   </div>
-  <div class="wrapper">
-    <div class="card" v-for="item in filteredItems"  v-bind:key="item.id" v-on:click="item.show = !item.show">
+  
+  <div>
+      <div class = "wrapper" v-show="expired"> 
+          <div class="card" v-for="item in filteredItems" v-show="item.expired" v-bind:key="item.id"  v-on:click="item.show = !item.show">
+        <a> <b style="color:red"> EXPIRED </b>
+        <img v-bind:src="item.img"/>
+        <b>{{ item.name }}</b>
+        <small style="color:red; ">expired on :</small>
+        <b>{{ item.expiry }}</b>
+        </a>
+        <div v-show="item.show"> 
+            <p> Food item : {{item.name}} </p>
+            <p> Expired on : {{ item.expiry }} </p>
+        </div>
+    </div> </div>
+      <div class="wrapper" v-show="consume"> <div class="card" v-for="item in filteredItems" v-show="item.consumed" v-bind:key="item.id"  v-on:click="item.show = !item.show">
+        <a>
+        <img v-bind:src="item.img"/>
+        <b>{{ item.name }}</b>
+        <small>expired on :</small>
+        <b>{{ item.expiry }}</b>
+        </a>
+        <div v-show="item.show"> 
+            <p> Food item : {{item.name}} </p>
+            <p> Expired on : {{ item.expiry }} </p>
+        </div>
+    </div> </div>
+      <div class="wrapper" v-show="existing"> <div class="card" v-for="item in filteredItems" v-show="!item.consumed" v-bind:key="item.id"  v-on:click="item.show = !item.show">
         <a>
         <img v-bind:src="item.img"/>
         <b>{{ item.name }}</b>
@@ -21,7 +54,8 @@
             <button> Edit </button>
             <button v-on:click="deleteFood(item.id)"> Delete </button>
         </div>
-    </div>
+    </div> </div>
+    
   </div>
 </div>
     
@@ -37,6 +71,9 @@ import Header from '../components/Header.vue';
             return {
                 search : '',
                 items: [],
+                expired: false,
+                existing: false,
+                consume: false,
             }
         },
         methods: {
@@ -64,6 +101,23 @@ import Header from '../components/Header.vue';
             },
             deleteFood: function(itemId) {
                 firebase.firestore().collection('foods').doc(itemId).delete().then(() => {location.reload()});
+            },
+            chooseCat: function() {
+                var c = document.getElementById("category");
+                var v = c.value;
+                if (v == "consume") {
+                    this.consume = true;
+                    this.expired = false;
+                    this.existing = false;
+                } else if (v == "existing") {
+                    this.consume = false;
+                    this.expired = false;
+                    this.existing = true;
+                } else {
+                    this.consume = false;
+                    this.expired = true;
+                    this.existing = false;
+                }
             }
         },
 
@@ -151,5 +205,18 @@ label {
 img {
         height: 100px;
       }
+.dropdown {
+    padding: 10px;
+}
+.view {
+    background: plum;
+    color: white;
+    font: bold;
+    border: transparent;
+    padding: 5px;
+    margin-left: 5px;
+    border-radius: 5px;
+}
+
 </style>
 
