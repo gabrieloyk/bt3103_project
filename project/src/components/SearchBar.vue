@@ -50,9 +50,9 @@
         <div v-show="item.show"> 
             <p> Food item : {{item.name}} </p>
             <p> Expiring on : {{ item.expiry }} </p>
-            <button v-on:click="consumed(item.id)"> Consume </button>
-            <button> Edit </button>
-            <button v-on:click="deleteFood(item.id)"> Delete </button>
+            <button id="consumeBtn" v-on:click="consumed(item.id)"> <b>Consume</b> </button>
+            <!--<button> Edit </button>-->
+            <button id="deleteBtn" v-on:click="deleteFood(item.id)"> <b>Delete</b> </button>
         </div>
     </div> </div>
     
@@ -173,7 +173,7 @@ input:focus {
     display: flex;
     max-width: 100%;
     flex-wrap: wrap;
-    padding-top: 12px;
+    padding: 12px;
   }
 
 .card {
@@ -222,6 +222,20 @@ img {
     color: rgb(80, 36, 80);
     font-size: 15px;
     padding: 5px;
+}
+#consumeBtn {
+    background: rgb(138, 214, 93);
+    border: transparent;
+    padding: 8px;
+    border-radius: 3px;
+    color: white;
+}
+#deleteBtn {
+    background: rgb(255, 116, 116);
+    border: transparent;
+    padding: 8px;
+    border-radius: 3px;
+    color: white;
 }
 
 </style>
