@@ -6,7 +6,7 @@
         <p> <a id="user">{{currentuser}} </a> <a id="para">is using this page</a></p>
         <div>
         <ul>
-          <li id="list" v-for="item in items" :key="item.id" v-show="!item.consumed">
+          <li class="purple" id="list" v-for="item in items" :key="item.id" v-show="!item.consumed">
             
             <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}</p>
             
@@ -254,5 +254,28 @@ export default {
   width:80%;
   float: right;
   padding: 20px;
+}
+
+.purple{ border-left: 5px solid #bd9bda; }
+
+li:hover { background-color: #EFEFEF; }
+li { 
+  width: 60%px; 
+  height: 50px;  
+  margin: 0 0 20px 0; 
+  background: rgb(255, 246, 230) 97% center no-repeat;
+  font-size: 15px;
+  color: #333;
+  padding: 5px 0 0 20px;
+  text-decoration: none;
+  font-family: "Segoe UI";
+  padding: 0.5em 1em;
+  border-radius: 8px;
+}
+
+ul {
+    margin-bottom: 14px;
+    list-style: none; 
+    padding:10px 20px 10px 10px;
 }
 </style>

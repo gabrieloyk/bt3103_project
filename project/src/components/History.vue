@@ -39,6 +39,8 @@ export default {
       fetchItems:function(){
       //this function will also update expired state of food in firestore
       firebase.firestore().collection('foods').where("userID","==",firebase.auth().currentUser.uid)
+      .orderBy('userID')
+      .orderBy('createdOn')
       .onSnapshot((querySnapShot)=>{
         this.history = []
             let item = {}
