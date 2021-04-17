@@ -40,7 +40,7 @@
             <p> Expired on : {{ item.expiry }} </p>
         </div>
     </div> </div>
-      <div class="wrapper" v-show="existing"> <div class="card" v-for="item in filteredItems" v-show="!item.consumed" v-bind:key="item.id"  v-on:click="item.show = !item.show">
+      <div class="wrapper" v-show="existing"> <div class="card" v-for="item in filteredItems" v-show="!item.consumed && !item.expired" v-bind:key="item.id"  v-on:click="item.show = !item.show">
         <a>
         <img v-bind:src="item.img"/>
         <b>{{ item.name }}</b>
