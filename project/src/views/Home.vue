@@ -3,7 +3,7 @@
         <app-header></app-header>
         <history></history>
         <div id="content">
-        <img id = "propic" src="http://placekitten.com/300/300">
+        <img v-bind:src="imgsrc" id="propic" >
         <p> <a id="para">Welcome, </a><a id="user"> {{currentuser}}!</a> </p>
         <div>
         <ul>
@@ -83,6 +83,7 @@ export default {
       items:[],//the rest of the items
       currentuser:"",
       expired:false,
+      imgsrc:"",
     }
   },
    methods:{
@@ -160,8 +161,18 @@ export default {
               this.items.push(item)  
             }
             } 
-            })      })   
-        },
+            })      })  
+            //to get profile pic source
+            const userid = firebase.auth().currentUser.uid
+            firebase.firestore().collection('users')
+            .doc(userid).collection('family').where('username',"==",this.currentuser)
+            .get().then((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                this.imgsrc = doc.data().imgfile
+                console.log(doc.id, " => ", doc.data());
+        });
+    })
+      },
       removeFile() {
         this.$refs.uploadfood.removeAllFiles();
       },
@@ -180,9 +191,9 @@ export default {
       },
    },
   created(){
-      this.fetchItems(),
-      this.currentuser = this.$store.state.user.username  
-      },
+      this.currentuser = this.$store.state.user.username,
+      this.fetchItems()
+  },
    //Register Locally
   components:{
     'app-header':Header,
