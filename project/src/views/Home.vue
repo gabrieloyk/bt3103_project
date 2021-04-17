@@ -6,7 +6,17 @@
         <p> <a id="user">{{currentuser}} </a> <a id="para">is using this page</a></p>
         <div>
         <ul>
-          <li class="purple" id="list" v-for="item in items" :key="item.id" v-show="!item.consumed">
+          <li class="red" id="list" v-for="item in threedays" :key="item.id" v-show="!item.consumed">
+            
+            <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}</p>
+            
+          </li>
+          <li class="yellow" id="list" v-for="item in oneweek" :key="item.id" v-show="!item.consumed">
+            
+            <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}</p>
+            
+          </li>
+          <li class="green" id="list" v-for="item in items" :key="item.id" v-show="!item.consumed">
             
             <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}</p>
             
@@ -66,7 +76,9 @@ export default {
       price:"",
       imgfile:"",
       category:"",
-      items: [],
+      threedays:[], //fopd expiring in three days
+      oneweek:[], //food expiring in one week
+      items:[],//the rest of the items
       currentuser:"",
       expired:false,
     }
@@ -112,9 +124,18 @@ export default {
         this.snackbar = false
         this.expired = false
       },
+      datediff:function(date1,date2) {
+          const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+        // Discard the time and time-zone information.
+          const utc1 = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
+          const utc2 = Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate());
+          return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+      },
       fetchItems:function(){
       //this function will also update expired state of food in firestore
-      firebase.firestore().collection('foods').where("userID","==",firebase.auth().currentUser.uid).onSnapshot((querySnapShot)=>{
+      firebase.firestore().collection('foods')
+      .where("userID","==",firebase.auth().currentUser.uid)
+      .onSnapshot((querySnapShot)=>{
         this.items = [];
         let item={}
         querySnapShot.forEach(doc=>{
@@ -126,7 +147,15 @@ export default {
             item.show=false
             item.id=doc.id
             item.expiry = doc.data().expireddate.toDate().toString().substring(0,15)
-            this.items.push(item)        
+            if((!item.consumed) && (!item.expired)) {
+              if(this.datediff(today, item.expireddate.toDate()) <= 3) {
+              this.threedays.push(item)
+            } else if(this.datediff(today,item.expireddate.toDate()) <= 7) {
+              this.oneweek.push(item)
+            } else {
+              this.items.push(item)  
+            }
+            } 
             })      })   
         },
       removeFile() {
@@ -256,7 +285,19 @@ export default {
   padding: 20px;
 }
 
-.purple{ border-left: 5px solid #bd9bda; }
+
+.red{
+  border-left: 5px solid #ea7186;
+  border-right: 5px solid #ea7186;
+}
+.yellow{ 
+  border-left: 5px solid #f2c76e; 
+  border-right: 5px solid #f2c76e; 
+  }
+.green{ 
+  border-left: 5px solid #9bc472; 
+  border-right: 5px solid #9bc472; 
+  }
 
 li:hover { background-color: #EFEFEF; }
 li { 
