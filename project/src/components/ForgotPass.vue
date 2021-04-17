@@ -4,22 +4,16 @@
         <router-link to="/" style="color:white">Log In</router-link> |
         <router-link to="/register" style="color:white">Register</router-link> 
 
-        <form @submit.prevent="login" id="form1">
+        <form @submit.prevent="reset" id="form1">
             <h1>Welcome to "Expired?"!</h1>
-            <h2>Login</h2>
+            <h2>Forgot Password</h2>
             <input
                 type="email"
-                placeholder="Email address..."
+                placeholder="Email address"
                 v-model="email"
             /><br><br>
-            <input
-                type="password"
-                placeholder="password..."
-                v-model="password"
-            />
-            <p v-on:click="forgot()" style="font-style:italic;color:#bd9bda"> Forgot Password?</p>
-            <button type="submit">Login</button>
-            <br><br>
+            <button type="submit">Reset Password</button>
+            <br>
         </form>
     </div>
     </body>
@@ -31,32 +25,30 @@ import firebase from 'firebase';
 export default {
     name: 'LogInPage',
     data() {
-        return {
-            email: '',
-            password: '',
-        };
+      return {
+        email: "",
+        error: null,
+        emailSending: false,
+      };
     },
     methods: {
-        login() {
-      
-            firebase
-                .auth()
-                .signInWithEmailAndPassword(this.email, this.password)
-                .then(() => {
-                    if(firebase.auth().currentUser.emailVerified) {
-                        alert('Successfully logged in');
-                        this.$router.push('/users');
-                    } else {
-                        alert("Please verify in your email!")
-                    }
-                })
-                .catch(error => {
-                    alert(error.message);
-                });
+        reset() {
+            if (!this.email) {
+                this.error = "Please type in a valid email address.";
+                return;
+            }
+            this.error = null;
+            this.emailSending = true;
+            firebase.auth().sendPasswordResetEmail(this.email)
+            .then(() => {
+                this.$router.push('/')
+                this.emailSending = false;
+            })
+            .catch(error => {
+                this.emailSending = false;
+                this.error = error.message;
+            });
         },
-        forgot() {
-            this.$router.push('/forgot-password')
-        }
     }
 };
 </script>
