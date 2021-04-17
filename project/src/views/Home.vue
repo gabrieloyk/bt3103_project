@@ -3,6 +3,7 @@
         <app-header></app-header>
         <history></history>
         <div id="content">
+        <img id = "propic" src="http://placekitten.com/300/300">
         <p> <a id="para">Welcome, </a><a id="user"> {{currentuser}}!</a> </p>
         <div>
         <ul>
@@ -138,6 +139,8 @@ export default {
       .where("userID","==",firebase.auth().currentUser.uid)
       .onSnapshot((querySnapShot)=>{
         this.items = [];
+        this.threedays =[];
+        this.oneweek = [];
         let item={}
         querySnapShot.forEach(doc=>{
             var today = new Date()
@@ -200,6 +203,12 @@ export default {
   font-size:14px;
 }
 * {box-sizing: border-box;}
+
+#propic {
+  max-width:100%;
+	height:150px;
+  border-radius:50%;
+}
 
 /* Button used to open the contact form - fixed at the bottom of the page */
 .open-button {
