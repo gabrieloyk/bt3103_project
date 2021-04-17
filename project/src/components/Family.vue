@@ -1,7 +1,7 @@
 <template>
     <div>
         <app-header></app-header>
-        <p>This is family page</p>
+        <p id="welcome">Welcome to the family!</p>
         <div class="wrapper">
           <div class="card" v-for="profile in profiles" v-bind:key="profile.username" v-on:dblclick="profile.show = !profile.show" v-on:click="selected = profile.id"
           :class="{active:profile.id === selected}">
@@ -10,8 +10,9 @@
             <br>
             <b>{{profile.username}}</b>
             </a>
-
+            <span class="hide">Click 2x<br></span>
             <div v-show="profile.show">
+              <br>
               <button v-on:click="deleteProfile(profile.id)" class="btn">Delete</button>
               <br>
               <button v-on:click="edit=true" class="btn">Edit Pic</button>
@@ -23,11 +24,11 @@
             <h2>Edit Profile Pic</h2>
             <label for="imgfilename"><b>New Profile Pic:</b></label>
             <upload-pro-pics ref="uploadpropic" v-on:addsrc="addImageSrc" ></upload-pro-pics>
-            <button class='btn' v-on:click.prevent="updateProf(selected)">Update</button>
+            <button class='btn' v-on:click.prevent="updateProf(selected)">Update</button>  
             <button class="btn" v-on:click.prevent="edit=false">Back</button>
-          </form>
+          </form><br>
         </div>
-        <button id="confirmButton" v-on:click="confirm()" class="btn">Confirm</button>
+        <button id="confirmButton" v-on:click="confirm()" class="btn">Confirm</button><br><br><br>
     </div>
 </template>
 
@@ -181,10 +182,12 @@ a {
   background-color:#b294eb;
   color:white;
   border-radius:10px;
+  position: relative;
+  margin:5px 5px;
+  text-align: center;
 }
 
 #confirmButton {
-  float:right;
   text-align: center;
   font-size: 24px;
   height:50px;
@@ -196,6 +199,20 @@ a {
   display:none;
 }
 
+.hide {
+  display: none;
+  font-size: 15px;
+  color:rgb(204, 196, 196);
+  font:"Helvetica";
+}
+    
+.card:hover .hide {
+  display: block;
+}
 
-
+#welcome {
+  font-family: Chalkduster, fantasy;
+  font-size: 25px;
+  color:#555
+}
 </style>

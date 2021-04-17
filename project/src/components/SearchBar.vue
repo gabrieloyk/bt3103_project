@@ -75,6 +75,7 @@ import Header from '../components/Header.vue';
                 expired: false,
                 existing: true,
                 consume: false,
+                currentuser:"",
             }
         },
         methods: {
@@ -97,6 +98,7 @@ import Header from '../components/Header.vue';
                 firebase.firestore().collection('foods').doc(itemId).update({
                   consumed:true,
                   consumedDate:new Date(),
+                  consumedBy:this.currentuser
                 }).then(() => {
                     console.log("Consumed state!");
                 })           
@@ -132,6 +134,7 @@ import Header from '../components/Header.vue';
         },
 
         created(){
+            this.currentuser = this.$store.state.user.username,
             this.fetchItems()    
         },
 
