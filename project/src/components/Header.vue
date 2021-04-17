@@ -3,11 +3,11 @@
     <header>
         <!--<h1>{{ msg }}</h1>-->
         <p><img :src="logo"/></p>
+        <router-link to="/aboutus"> About us </router-link>
         <router-link to="/home">Home</router-link>
         <router-link to="/reports">Reports</router-link> 
         <router-link to="/family">Family</router-link>
         <router-link to="/search"> Search... </router-link>
-        <router-link to="/aboutus"> About us </router-link>
         <button id="button" @click="logout">Sign Out</button> 
     </header>
     </div>
@@ -80,5 +80,6 @@ a{
     color: white;
     background: rgb(184, 150, 169);
     border-radius: 10px;
+    margin-left:10px;
 }
 </style>
