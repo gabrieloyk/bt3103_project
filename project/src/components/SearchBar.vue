@@ -38,6 +38,7 @@
         <div v-show="item.show"> 
             <p> Food item : {{item.name}} </p>
             <p> Expired on : {{ item.expiry }} </p>
+            <button id="consumeBtn" v-on:click="unconsumed(item.id, item.createdOn)"> <b>Undo Consumption</b> </button>
         </div>
     </div> </div>
       <div class="wrapper" v-show="existing"> <div class="card" v-for="item in filteredItems" v-show="!item.consumed && !item.expired" v-bind:key="item.id"  v-on:click="item.show = !item.show">
@@ -119,6 +120,14 @@ import Header from '../components/Header.vue';
                     this.expired = true;
                     this.existing = false;
                 }
+            },
+            unconsumed: function(itemId, create_date) {
+                firebase.firestore().collection('foods').doc(itemId).update({
+                  consumed:false,
+                  consumedDate:create_date,
+                }).then(() => {
+                    console.log("Undo Consumption!");
+                })  
             }
         },
 

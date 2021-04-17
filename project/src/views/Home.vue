@@ -8,7 +8,7 @@
         <ul>
           <li class="red" id="list" v-for="item in threedays" :key="item.id" v-show="!item.consumed">
             
-            <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}  <b>Please Consume Soon! </b> 
+            <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}  <b>Please Consume It Soon! </b> 
             <button class="red1" id="consumeBtn" v-on:click="consumed(item.id)"> 
            <b>Consume</b> </button></p>
           </li>
@@ -165,7 +165,16 @@ export default {
 
       getUser(currentuser) {
         this.currentuser = currentuser;
-      }
+      },
+      consumed: function(itemId) {
+                
+                firebase.firestore().collection('foods').doc(itemId).update({
+                  consumed:true,
+                  consumedDate:new Date(),
+                }).then(() => {
+                    console.log("Consumed state!");
+                })           
+      },
    },
   created(){
       this.fetchItems(),
