@@ -94,8 +94,12 @@ export default {
       this.$refs.uploadpropic.removeAllFiles();
     },
     select() {
-      this.$store.commit("chooseUser",this.currentuser);
-      this.$router.push({name:"Home"});
+      if(this.currentuser === "") {
+        alert("Please select a user!")
+      } else {
+        this.$store.commit("chooseUser",this.currentuser);
+        this.$router.push({name:"Home"});
+      }
     },
 
     addFamily() {
