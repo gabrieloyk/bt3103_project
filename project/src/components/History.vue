@@ -7,7 +7,7 @@
                     {{item.username}} adds {{item.name}} into the list {{item.temp}} 
                 </li>
                 <li class="yellow" v-for="item in consume" :key="item.id">
-                    {{item.username}} consumes {{item.name}} {{item.temp}}
+                    {{item.consumedBy}} consumes {{item.name}} {{item.temp}}
                 </li>
                 
             </ul>

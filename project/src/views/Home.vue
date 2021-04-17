@@ -113,7 +113,8 @@ export default {
             category: this.category,
             consumed: false,
             expired: this.expired,
-            consumedDate: new Date()
+            consumedDate: new Date(),
+            consumedBy:"",
           },
         )
         this.removeFile();
@@ -185,6 +186,7 @@ export default {
                 firebase.firestore().collection('foods').doc(itemId).update({
                   consumed:true,
                   consumedDate:new Date(),
+                  consumedBy:this.currentuser,
                 }).then(() => {
                     console.log("Consumed state!");
                 })           
