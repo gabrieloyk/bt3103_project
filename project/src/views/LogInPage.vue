@@ -37,12 +37,17 @@ export default {
     },
     methods: {
         login() {
+      
             firebase
                 .auth()
                 .signInWithEmailAndPassword(this.email, this.password)
                 .then(() => {
-                    alert('Successfully logged in');
-                    this.$router.push('/users');
+                    if(firebase.auth().currentUser.emailVerified) {
+                        alert('Successfully logged in');
+                        this.$router.push('/users');
+                    } else {
+                        alert("Please verify in your email!")
+                    }
                 })
                 .catch(error => {
                     alert(error.message);

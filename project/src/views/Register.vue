@@ -37,13 +37,16 @@ export default {
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(this.email, this.password)
-                .then((cred) => { /*add the user to user collections in firestore*/
-                    firebase.firestore().collection('users').doc(cred.user.uid).set({
-                        email:this.email,
-                        password:this.password
-                    })
-                    alert('Successfully registered! Please login.');
-                    this.$router.push('/');
+                .then(() => { /*add the user to user collections in firestore*/
+                    const user = firebase.auth().currentUser
+                    const actionCodeSettings = {
+                        url:`https://bt3103-676e0.web.app/`,
+                        handleCodeInApp:true,
+                    }
+                    alert("Please check your email for verification!")
+                    user.sendEmailVerification(actionCodeSettings);
+                    //alert('Successfully registered! Please login.');
+                    //this.$router.push('/');
                 })
                 .catch(error => {
                     alert(error.message);
