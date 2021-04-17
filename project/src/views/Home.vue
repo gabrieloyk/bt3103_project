@@ -3,23 +3,24 @@
         <app-header></app-header>
         <history></history>
         <div id="content">
-        <p> <a id="user">{{currentuser}} </a> <a id="para">is using this page</a></p>
+        <p> <a id="para">Welcome, </a><a id="user"> {{currentuser}}!</a> </p>
         <div>
         <ul>
           <li class="red" id="list" v-for="item in threedays" :key="item.id" v-show="!item.consumed">
             
-            <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}</p>
-            
+            <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}  <b>Please Consume Soon! </b> 
+            <button class="red1" id="consumeBtn" v-on:click="consumed(item.id)"> 
+           <b>Consume</b> </button></p>
           </li>
           <li class="yellow" id="list" v-for="item in oneweek" :key="item.id" v-show="!item.consumed">
             
-            <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}</p>
-            
+            <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}    
+            <button class="yellow1" id="consumeBtn" v-on:click="consumed(item.id)"> <b> Consume</b> </button> </p>
           </li>
           <li class="green" id="list" v-for="item in items" :key="item.id" v-show="!item.consumed">
             
-            <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}</p>
-            
+            <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}  
+            <button class="green1" id="consumeBtn" v-on:click="consumed(item.id)"> <b>Consume</b> </button> </p>
           </li>
         </ul>
         </div>
@@ -193,7 +194,7 @@ export default {
 
 /* Button used to open the contact form - fixed at the bottom of the page */
 .open-button {
-  background-color: #555;
+  background-color: #7a77b9;
   color: white;
   padding: 16px 20px;
   border: none;
@@ -275,7 +276,7 @@ export default {
 
 #para {
   font-family: Chalkduster, fantasy;
-  font-size: 18px;
+  font-size: 25px;
   color:#555
 }
 
@@ -302,10 +303,10 @@ export default {
 li:hover { background-color: #EFEFEF; }
 li { 
   width: 60%px; 
-  height: 50px;  
+  height: 60px;  
   margin: 0 0 20px 0; 
   background: rgb(255, 246, 230) 97% center no-repeat;
-  font-size: 15px;
+  font-size: 15.5px;
   color: #333;
   padding: 5px 0 0 20px;
   text-decoration: none;
@@ -319,4 +320,21 @@ ul {
     list-style: none; 
     padding:10px 20px 10px 10px;
 }
+#consumeBtn {
+    border: transparent;
+    padding: 8px;
+    border-radius: 3px;
+    color: white;
+    position:relative;
+    margin-left: 25px;
+}
+.red1{
+  background: #ea7186;
+}
+.yellow1{ 
+  background: #f2c76e; 
+  }
+.green1{ 
+  background:  #9bc472; 
+  }
 </style>
