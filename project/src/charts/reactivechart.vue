@@ -1,6 +1,6 @@
 <template>
 <div>
-<h1> Total Food Wastage in Singapore </h1>
+<h1> Food Waste Statistics in Singapore </h1>
 <Plotly :data="data" :layout="layout" :display-mode-bar="true"></Plotly>
 </div>
 </template>

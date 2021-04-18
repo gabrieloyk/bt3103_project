@@ -1,6 +1,6 @@
 <template>
   <div class="chart">
-    <h1>Total Waste Generated </h1>
+    <h1>Total Waste Generated in Singapore</h1>
     <chart></chart>
   </div>
 </template>
