@@ -1,7 +1,7 @@
 <template>
     <body>
     <div class="familyDiv" v-for="member in family" :key="member[0]">
-      <button class="btn" @click="currentuser = member[1].username;" v-bind:style="{ 'background-image': 'url(' + member[1].imgfile + ')',
+      <button class="btn" v-on:click="currentuser = member[1].username, select()" v-bind:style="{ 'background-image': 'url(' + member[1].imgfile + ')',
       'background-size':'cover','background-position':'center'}">
         <h2 style="color:white; float:center">{{member[1].username}}</h2>
         </button>
@@ -19,7 +19,6 @@
             <button type="button" v-on:click="closeForm()">Back</button>
           </form>
         </div>
-      <button type="button" class="btn" v-on:click="select()">Select</button>
     </div>
     </body>
 </template>
