@@ -9,18 +9,19 @@ export default {
         meat:[],
         dairy:[],
         snacks:[],
+        staples:[],
         beverages:[],
         others:[],
         datacollection: {
-            labels: ["fruits & vegetables", "meat & seafood", "dairy & bakery", "snacks", "beverages","others"],
+            labels: ["fruits & vegetables", "meat & seafood", "dairy", "staples & bakery", "snacks", "beverages","others"],
             datasets: [{
                 label: "item",
-                backgroundColor: ["#9bc472","#f2c76e","#ea7186", "#bd9bda", "#7a77b9", "#fbc4bf"],
+                backgroundColor: ["#9bc472","#f2c76e","#ea7186", "#6699ff", "#bd9bda", "#7a77b9", "#fbc4bf"],
                 data: []
               }]
         },
         options: {
-            legend: { display: true},
+            legend: {display: true},
             responsive: true,
             maintainAspectRatio: false
         },      
@@ -38,8 +39,10 @@ export default {
                 this.fruits_veg.push(item)
               } else if(item.category === "meat & seafood") {
                 this.meat.push(item)
-              } else if(item.category === "dairy & bakery") {
+              } else if(item.category === "dairy") {
                 this.dairy.push(item)
+              } else if(item.category === "staples & bakery") {
+                this.staples.push(item)
               } else if(item.category === "snacks") {
                 this.snacks.push(item)
               } else if(item.category === "beverages") {
@@ -52,6 +55,7 @@ export default {
             this.datacollection.datasets[0].data.push(this.fruits_veg.length)
             this.datacollection.datasets[0].data.push(this.meat.length)
             this.datacollection.datasets[0].data.push(this.dairy.length)
+            this.datacollection.datasets[0].data.push(this.staples.length)
             this.datacollection.datasets[0].data.push(this.snacks.length)
             this.datacollection.datasets[0].data.push(this.beverages.length)
             this.datacollection.datasets[0].data.push(this.others.length)

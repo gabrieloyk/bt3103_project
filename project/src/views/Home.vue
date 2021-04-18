@@ -8,19 +8,21 @@
         <div>
         <ul>
           <li class="red" id="list" v-for="item in threedays" :key="item.id" v-show="!item.consumed">
-            
-            <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}  <b>Please Consume It Soon! </b> 
-            <button class="red1" id="consumeBtn" v-on:click="consumed(item.id)"> 
+            <p id="itemName" v-show="item.daysToExpiry==0">{{ item.name }} is expiring on {{item.expiry}} which is today. <b>Please Consume It By Today! </b> 
+            <p id="itemName" v-show="item.daysToExpiry==1">{{ item.name }} is expiring on {{item.expiry}} which is tomorrow. <b>Please Consume It ASAP! </b> 
+            <p id="itemName" v-show="items.daysToExpiry>1">{{ item.name }} is expiring on {{item.expiry}} in {{item.daysToExpiry}} days <b>Please Consume It Soon! </b> 
+            <button v-show="items.daysToExpiry<=3" class="red1" id="consumeBtn" v-on:click="consumed(item.id)"> 
            <b>Consume</b> </button></p>
           </li>
           <li class="yellow" id="list" v-for="item in oneweek" :key="item.id" v-show="!item.consumed">
             
-            <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}    
+            <p id="itemName">{{ item.name }} is expiring on {{item.expiry}} in {{item.daysToExpiry}} days    
             <button class="yellow1" id="consumeBtn" v-on:click="consumed(item.id)"> <b> Consume</b> </button> </p>
           </li>
           <li class="green" id="list" v-for="item in items" :key="item.id" v-show="!item.consumed">
-            
-            <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}  
+            <p id="itemName" v-show="Math.floor(item.daysToExpiry/7) <= 1 && item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7) <= 1 ">{{ item.name }} is expiring on {{item.expiry}} in {{Math.floor(item.daysToExpiry/7)}} week and {{item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7)}} day
+            <p id="itemName" v-show="Math.floor(item.daysToExpiry/7) > 1 && item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7) <= 1 ">{{ item.name }} is expiring on {{item.expiry}} in {{Math.floor(item.daysToExpiry/7)}} weeks and {{item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7)}} day
+            <p id="itemName" v-show="Math.floor(item.daysToExpiry/7) > 1 && item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7) > 1 ">{{ item.name }} is expiring on {{item.expiry}} in {{Math.floor(item.daysToExpiry/7)}} weeks and {{item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7)}} days
             <button class="green1" id="consumeBtn" v-on:click="consumed(item.id)"> <b>Consume</b> </button> </p>
           </li>
         </ul>
@@ -43,7 +45,8 @@
             <option disabled value="">Select category</option>
               <option>fruits & vegetables</option>
               <option>meat & seafood</option>
-              <option>dairy & bakery</option>
+              <option>dairy</option>
+              <option>staples and bakery</option>
               <option>snacks</option>
               <option>beverage</option>
               <option>others</option>
@@ -99,7 +102,7 @@ export default {
     addToFirebase() {
         var today = new Date()
         //to check if user inputted an expired food
-        if(new Date(this.expireddate) - today <0 ) {this.expired=true} 
+        if(new Date(this.expireddate) - today +  1000 * 60 * 60 * 16 < 0 ) {this.expired=true} 
         const foodRef = firebase.firestore().collection('foods')
         foodRef.add(
           {
@@ -118,7 +121,6 @@ export default {
           },
         )
         this.removeFile();
-        alert("Document is written successfully")
         this.name=''
         this.expireddate=''
         this.price=''
@@ -147,16 +149,18 @@ export default {
         querySnapShot.forEach(doc=>{
             var today = new Date()
             item=doc.data()
-            item.expired= (item.expireddate.toDate() - today < 0) ? true : false 
+            item.expired= (item.expireddate.toDate() - today + 1000 * 60 * 60 * 16 < 0) ? true : false 
             //update expired state in firestore
             firebase.firestore().collection('foods').doc(doc.id).update({expired:item.expired})
             item.show=false
             item.id=doc.id
             item.expiry = doc.data().expireddate.toDate().toString().substring(0,15)
+            item.daysToExpiry = this.datediff(today, item.expireddate.toDate())
+            
             if((!item.consumed) && (!item.expired)) {
-              if(this.datediff(today, item.expireddate.toDate()) <= 3) {
+              if (this.datediff(today, item.expireddate.toDate()) <= 3) {
               this.threedays.push(item)
-            } else if(this.datediff(today,item.expireddate.toDate()) <= 7) {
+            } else if (this.datediff(today,item.expireddate.toDate()) <= 7) {
               this.oneweek.push(item)
             } else {
               this.items.push(item)  
