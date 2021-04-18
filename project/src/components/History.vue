@@ -2,6 +2,7 @@
    <div>
     <aside>
         <nav>
+            <div class="side">
             <ul> 
                 <li class="purple" v-for="item in history" :key="item.id">
                     {{item.username}} adds {{item.name}} into the list {{item.temp}} 
@@ -9,8 +10,8 @@
                 <li class="yellow" v-for="item in consume" :key="item.id">
                     {{item.consumedBy}} consumes {{item.name}} {{item.temp}}
                 </li>
-                
             </ul>
+            </div>
         </nav>
     </aside>
     </div>
@@ -98,7 +99,7 @@ export default {
 
 <style scoped>
 aside {
-    height:800px;
+    height:100vh;
     background: rgb(255, 246, 230);
     box-sizing: border-box;
     box-shadow: 8px 0px 16px -8px hsla(197, 37, 24, .5);
@@ -135,4 +136,7 @@ ul {
     padding:10px 20px 10px 10px;
 }
 
+.side {
+    background:rgb(255, 246, 230);
+}
 </style>
