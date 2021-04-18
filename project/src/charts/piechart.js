@@ -18,10 +18,6 @@ export default {
         },
         options: {
             legend: { display: true},
-            title: {
-              display: true,
-              text: "Family's Food Status This Month",
-            },
             responsive: true,
             maintainAspectRatio: false
         },      

@@ -29,10 +29,6 @@ export default {
         },
         options: {
             legend: { display: true},
-            title: {
-              display: true,
-              text: 'Expense'
-            },
             responsive: true,
             maintainAspectRatio: false,
             scales: {

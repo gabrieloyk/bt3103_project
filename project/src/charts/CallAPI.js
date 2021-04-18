@@ -17,7 +17,21 @@ export default {
             legend: { display: false },
             title: {
               display: true,
-              text: ''
+              text: '',
+            },
+            scales: {
+              yAxes: [{
+                scaleLabel: {
+                  display: true, 
+                  labelString: 'Total Waste Generated (Million tonnes)'
+                }
+              }],
+              xAxes: [{
+                scaleLabel: {
+                  display: true, 
+                  labelString: 'Year'
+                }
+              }]
             },
             responsive: true,
             maintainAspectRatio: false

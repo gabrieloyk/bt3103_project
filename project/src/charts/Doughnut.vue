@@ -1,6 +1,6 @@
 <template>
   <div class="chart">
-    <h2>Overview of Food Inventories</h2>
+    <h2>Fresh Food by Category</h2>
     <doughnut></doughnut>
   </div>
 </template>

@@ -21,10 +21,6 @@ export default {
         },
         options: {
             legend: { display: true},
-            title: {
-              display: true,
-              text: "Contributors of Food Waste This Month",
-            },
             responsive: true,
             maintainAspectRatio: false
         },      

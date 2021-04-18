@@ -3,7 +3,7 @@
     <header>
         <!--<h1>{{ msg }}</h1>-->
         <p><img :src="logo"/></p>
-        <router-link to="/aboutus"> About us </router-link>
+        <router-link to="/aboutus"> About Us </router-link>
         <router-link to="/home">Home</router-link>
         <router-link to="/reports">Reports</router-link> 
         <router-link to="/family">Family</router-link>
@@ -48,7 +48,7 @@ export default {
 header{
     background: rgb(253, 235, 203);
     border-style: solid;
-    border-color: #b796dd;
+    border-color: #b294eb;
     border-width: 7px;
     height: 230px;
     text-align: top;
@@ -80,6 +80,5 @@ a{
     color: white;
     background: rgb(184, 150, 169);
     border-radius: 10px;
-    margin-left:10px;
 }
 </style>

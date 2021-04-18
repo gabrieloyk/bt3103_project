@@ -14,16 +14,16 @@
         could have been consumed if better managed. 
         Examples of avoidable food waste are leftovers from a meal, 
         expired food, stale food, and blemished fruits and vegetables. 
-        Avoidable food waste can be prevent ed by taking food wastage reduction 
+        Avoidable food waste can be prevented by taking food wastage reduction 
         actions such as buying, ordering and cooking only what is needed and adopting smart food storage and preparation practices. 
         This issue is what 'Expired?' aims to solve.</p>
-        
+          <p> With rising trends in wastage, do your part,  and adopt smart food waste management with 'Expired?' </p>
         <div class="section" id="overall" style="float: left; width: 45%; height: 260px;">
         <dashboard> </dashboard>
         </div>
         <div style="float: right; width: 55%; height: 260px;">
         <reactivechart> </reactivechart>
-        </div>
+        </div> 
     </div>
 </template>
 

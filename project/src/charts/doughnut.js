@@ -21,10 +21,6 @@ export default {
         },
         options: {
             legend: { display: true},
-            title: {
-              display: true,
-              text: "Fresh Food by Category",
-            },
             responsive: true,
             maintainAspectRatio: false
         },      
