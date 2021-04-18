@@ -8,25 +8,30 @@
         <div>
         <ul>
           <li class="red" id="list" v-for="item in threedays" :key="item.id" v-show="!item.consumed">
-            <p id="itemName" v-show="item.daysToExpiry==0">{{ item.name }} is expiring on {{item.expiry}} which is today. <b>Please Consume It By Today! </b> 
-            <p id="itemName" v-show="item.daysToExpiry==1">{{ item.name }} is expiring on {{item.expiry}} which is tomorrow. <b>Please Consume It ASAP! </b> 
-            <p id="itemName" v-show="items.daysToExpiry>1">{{ item.name }} is expiring on {{item.expiry}} in {{item.daysToExpiry}} days <b>Please Consume It Soon! </b> 
-            <button v-show="items.daysToExpiry<=3" class="red1" id="consumeBtn" v-on:click="consumed(item.id)"> 
-           <b>Consume</b> </button>
-           <button class="addToCalendar" id="consumeBtn" v-on:click="addToCalendar(item.expireddate.toDate(), item.name)"> <b>Add To Calendar</b> </button></p>
+            <div style="display:inline">
+            <div id="itemName" v-show="item.daysToExpiry==0">{{ item.name }} is expiring on {{item.expiry}} which is today. <b>Please Consume It By Today! </b> </div>
+            <div id="itemName" v-show="item.daysToExpiry==1">{{ item.name }} is expiring on {{item.expiry}} which is tomorrow. <b>Please Consume It ASAP! </b> </div>
+            <div id="itemName" v-show="items.daysToExpiry>1">{{ item.name }} is expiring on {{item.expiry}} in {{item.daysToExpiry}} days <b>Please Consume It Soon! </b> </div>
+            <div> <button class="red1" id="consumeBtn" v-on:click="consumed(item.id)"> <b>Consume</b> </button>
+           <button class="addToCalendar" id="consumeBtn" v-on:click="addToCalendar(item.expireddate.toDate(), item.name)"> <b>Add To Calendar</b> </button> </div>
+            </div>
           </li>
           <li class="yellow" id="list" v-for="item in oneweek" :key="item.id" v-show="!item.consumed">
-            
-            <p id="itemName">{{ item.name }} is expiring on {{item.expiry}} in {{item.daysToExpiry}} days    
+            <div style="display:inline">
+            <div id="itemName">{{ item.name }} is expiring on {{item.expiry}} in {{item.daysToExpiry}} days </div>   
+            <div>
             <button class="yellow1" id="consumeBtn" v-on:click="consumed(item.id)"> <b> Consume</b> </button> 
-            <button class="addToCalendar" id="consumeBtn" v-on:click="addToCalendar(item.expireddate.toDate(), item.name)"> <b>Add To Calendar</b> </button></p>
+            <button class="addToCalendar" id="consumeBtn" v-on:click="addToCalendar(item.expireddate.toDate(), item.name)"> <b>Add To Calendar</b> </button></div>
+            </div>
           </li>
           <li class="green" id="list" v-for="item in items" :key="item.id" v-show="!item.consumed">
-            <p id="itemName" v-show="Math.floor(item.daysToExpiry/7) <= 1 && item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7) <= 1 ">{{ item.name }} is expiring on {{item.expiry}} in {{Math.floor(item.daysToExpiry/7)}} week and {{item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7)}} day
-            <p id="itemName" v-show="Math.floor(item.daysToExpiry/7) > 1 && item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7) <= 1 ">{{ item.name }} is expiring on {{item.expiry}} in {{Math.floor(item.daysToExpiry/7)}} weeks and {{item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7)}} day
-            <p id="itemName" v-show="Math.floor(item.daysToExpiry/7) > 1 && item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7) > 1 ">{{ item.name }} is expiring on {{item.expiry}} in {{Math.floor(item.daysToExpiry/7)}} weeks and {{item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7)}} days
-            <button class="green1" id="consumeBtn" v-on:click="consumed(item.id)"> <b>Consume</b> </button> 
-            <button class="addToCalendar" id="consumeBtn" v-on:click="addToCalendar(item.expireddate.toDate(), item.name)"> <b>Add To Calendar</b> </button></p>
+            <div style="display:inline">
+            <div id="itemName" v-show="Math.floor(item.daysToExpiry/7) <= 1 && item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7) <= 1 ">{{ item.name }} is expiring on {{item.expiry}} in {{Math.floor(item.daysToExpiry/7)}} week and {{item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7)}} day </div>
+            <div id="itemName" v-show="Math.floor(item.daysToExpiry/7) > 1 && item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7) <= 1 ">{{ item.name }} is expiring on {{item.expiry}} in {{Math.floor(item.daysToExpiry/7)}} weeks and {{item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7)}} day </div>
+            <div id="itemName" v-show="Math.floor(item.daysToExpiry/7) > 1 && item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7) > 1 ">{{ item.name }} is expiring on {{item.expiry}} in {{Math.floor(item.daysToExpiry/7)}} weeks and {{item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7)}} days </div>
+            <div> <button class="green1" id="consumeBtn" v-on:click="consumed(item.id)"> <b>Consume</b> </button> 
+            <button class="addToCalendar" id="consumeBtn" v-on:click="addToCalendar(item.expireddate.toDate(), item.name)"> <b>Add To Calendar</b> </button> </div>
+            </div>
           </li>
         </ul>
         </div>
@@ -366,7 +371,7 @@ li:hover { background-color: #EFEFEF; }
 li { 
   width: 60%px; 
   height: 60px;  
-  margin: 0 0 20px 0; 
+  margin: 0 0 15px 0; 
   background: rgb(255, 246, 230) 97% center no-repeat;
   font-size: 15.5px;
   color: #333;
@@ -390,6 +395,8 @@ ul {
     color: white;
     position:relative;
     margin-left: 25px;
+    margin: 5px;
+    font-size:11px;
 }
 .red1:hover {
   background-color: #af5765;
