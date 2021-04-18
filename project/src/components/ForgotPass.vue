@@ -1,9 +1,8 @@
 <template>
     <body>
     <div class='div1'>
-        <router-link to="/" style="color:white">Log In</router-link> |
-        <router-link to="/register" style="color:white">Register</router-link> 
-
+        <img src="https://images.theconversation.com/files/282104/original/file-20190701-105182-1q7a7ji.jpg" >
+        <div id="content">
         <form @submit.prevent="reset" id="form1">
             <h1>Welcome to "Expired?"!</h1>
             <h2>Forgot Password</h2>
@@ -13,8 +12,11 @@
                 v-model="email"
             /><br><br>
             <button type="submit">Reset Password</button>
-            <br>
+            <br><br>
+            <hr width="50%">
+            <p v-on:click="signInRoute()" style="font-style:italic;color:#bd9bda;font-size:12px">Back to sign in page</p>
         </form>
+        </div>
     </div>
     </body>
 </template>
@@ -41,28 +43,26 @@ export default {
             this.emailSending = true;
             firebase.auth().sendPasswordResetEmail(this.email)
             .then(() => {
+                alert("Please check your email to reset password")
                 this.$router.push('/')
                 this.emailSending = false;
             })
             .catch(error => {
                 this.emailSending = false;
                 this.error = error.message;
-            });
+                alert(this.error)
+            });  
         },
+        signInRoute() {
+            this.$router.push('/')
+        }
     }
 };
+
 </script>
 
 <style scoped>
-   body { 
-        font-family: 'Ubuntu', sans-serif;
-        float: center;
-        padding: 260px;
-        background-image: url('https://images.theconversation.com/files/282104/original/file-20190701-105182-1q7a7ji.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=900.0&fit=crop');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-    }
-    button {
+   button {
       cursor: pointer;
         border-radius: 5em;
         color: #fff;
@@ -80,7 +80,13 @@ export default {
     form {
         padding-top: 5px;
         padding-bottom: 30px;
-        background-color: floralwhite;
+        background-color: whitesmoke;
+    }
+    #content{
+        margin-top: 10%;
+        float:right;
+        width:35%;
+        background-color:whitesmoke;
     }
     input {
         padding : 10px;
@@ -89,5 +95,26 @@ export default {
     }
     h1 {
         color: #9C27B0;
+    }
+    .div1 {
+        background-color:whitesmoke;
+        height:100vh;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        min-height: 100%;
+        box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
+		0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);
+    }
+    img {
+        width:65%;
+        height:100%;
+        box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
+		0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);
+    }
+    .router {
+        border: rgba(99, 102, 241);
+        border-radius: 0.375rem;
+        list-style-type: none;
     }
 </style>

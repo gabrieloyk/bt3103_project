@@ -1,23 +1,26 @@
 <template>
     <body>
-    <div>
-        <router-link to="/" style="color:white">Log In</router-link> |
-        <router-link to="/register" style="color:white">Register</router-link> 
-            <!--<router-link to="/dashboard">Dashboard</router-link> |-->
+    <div class='div1'>
+        <img src="https://images.theconversation.com/files/282104/original/file-20190701-105182-1q7a7ji.jpg" >
+        <div id="content">
         <form @submit.prevent="register">
+            <h1>Welcome to "Expired?"!</h1>
             <h2>Register</h2>
             <input
                 type="email"
-                placeholder="Email address..."
+                placeholder="Email address"
                 v-model="email"
             /><br><br>
             <input
                 type="password"
-                placeholder="password..."
+                placeholder="Password"
                 v-model="password"
             /><br><br>
-            <button type="submit">Register</button>
+            <button type="submit">Register</button><br><br>
+            <hr width="50%">
+            <p v-on:click="signInRoute()" style="font-style:italic;color:#bd9bda;font-size:12px">Already have an account? Sign in here</p>
         </form>
+        </div>
     </div>
     </body>
 </template>
@@ -52,19 +55,14 @@ export default {
                     alert(error.message);
                 });
         },
+        signInRoute() {
+            this.$router.push('/')
+        }
     },
 };
 </script>
 
 <style scoped>
-   body { 
-        font-family: 'Ubuntu', sans-serif;
-        float: center;
-        padding: 260px;
-        background-image: url('https://images.theconversation.com/files/282104/original/file-20190701-105182-1q7a7ji.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=900.0&fit=crop');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-    }
     button {
       cursor: pointer;
         border-radius: 5em;
@@ -83,12 +81,42 @@ export default {
     form {
         padding-top: 5px;
         padding-bottom: 30px;
-        background-color: floralwhite;
+        background-color: whitesmoke;
+    }
+    #content{
+        margin-top: 10%;
+        float:right;
+        width:35%;
+        background-color:whitesmoke;
     }
     input {
         padding : 10px;
         border-radius: 5em;
         border-color: rgb(197, 141, 141);
+    }
+    h1 {
+        color: #9C27B0;
+    }
+    .div1 {
+        background-color:whitesmoke;
+        height:100vh;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        min-height: 100%;
+        box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
+		0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);
+    }
+    img {
+        width:65%;
+        height:100%;
+        box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
+		0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);
+    }
+    .router {
+        border: rgba(99, 102, 241);
+        border-radius: 0.375rem;
+        list-style-type: none;
     }
 </style>
 
