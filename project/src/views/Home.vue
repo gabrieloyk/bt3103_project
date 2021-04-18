@@ -11,17 +11,19 @@
             
             <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}  <b>Please Consume It Soon! </b> 
             <button class="red1" id="consumeBtn" v-on:click="consumed(item.id)"> 
-           <b>Consume</b> </button></p>
+           <b>Consume</b> </button> <button class="addToCalendar" id="consumeBtn" v-on:click="addToCalendar(item.expireddate.toDate(), item.name)"> <b>Add To Calendar</b> </button></p> 
           </li>
           <li class="yellow" id="list" v-for="item in oneweek" :key="item.id" v-show="!item.consumed">
             
             <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}    
-            <button class="yellow1" id="consumeBtn" v-on:click="consumed(item.id)"> <b> Consume</b> </button> </p>
+            <button class="yellow1" id="consumeBtn" v-on:click="consumed(item.id)"> <b> Consume</b> </button> 
+            <button class="addToCalendar" id="consumeBtn" v-on:click="addToCalendar(item.expireddate.toDate(), item.name)"> <b>Add To Calendar</b> </button></p>
           </li>
           <li class="green" id="list" v-for="item in items" :key="item.id" v-show="!item.consumed">
             
             <p id="itemName">{{ item.name }} is expiring on {{item.expiry}}  
-            <button class="green1" id="consumeBtn" v-on:click="consumed(item.id)"> <b>Consume</b> </button> </p>
+            <button class="green1" id="consumeBtn" v-on:click="consumed(item.id)"> <b>Consume</b> </button> 
+            <button class="addToCalendar" id="consumeBtn" v-on:click="addToCalendar(item.expireddate.toDate(), item.name)"> <b>Add To Calendar</b> </button></p>
           </li>
         </ul>
         </div>
@@ -53,6 +55,7 @@
 
             <button type="submit" class="btn" v-on:click.prevent="addToFirebase()">Add</button>
             <button type="button" class="btn cancel" v-on:click="closeForm()">Close</button>
+            <button v-on:click.prevent="addToCalendar()"> Add to Calendar </button>
           </form>
           </div>
         </div>
@@ -66,6 +69,7 @@ import Header from '../components/Header.vue';
 import firebase from 'firebase/app';
 import UploadPics from '../components/UploadPics.vue';
 import History from '../components/History.vue';
+
 
 //import Footer from './components/Footer.vue'
 
@@ -191,6 +195,29 @@ export default {
                     console.log("Consumed state!");
                 })           
       },
+      addToCalendar(expiryDate, foodName) {
+      var googleCalendarLink = `http://www.google.com/calendar/event?action=TEMPLATE&text=${this.title || foodName + " EXPIRING TODAY"}&dates=${this.formatDate(expiryDate)}/${this.formatDate(expiryDate)}&details=${foodName || ""}`
+      window.open(googleCalendarLink, '_blank');
+    },
+    formatDate(d) {
+      var date = d;
+      const day = date.getDate();
+      const monthIndex = date.getMonth();
+      const year = date.getFullYear();
+      const hour = date.getHours();
+      const minutes = date.getMinutes();
+      let formatted_date;
+      if(hour === 0 && minutes === 0) {
+        formatted_date = ("" + year) + this.zero_pad2(monthIndex + 1) + this.zero_pad2(day);
+      } else {
+        formatted_date = ("" + year) + this.zero_pad2(monthIndex + 1) + this.zero_pad2(day) + "T" + this.zero_pad2(hour) + this.zero_pad2(minutes) + "00Z";
+      }
+      return formatted_date;
+    },
+    zero_pad2(num) {
+      if(num < 10) return "0" + num;
+        return num;
+    }
    },
   created(){
       this.currentuser = this.$store.state.user.username,
@@ -202,7 +229,6 @@ export default {
     'upload-pics':UploadPics,
     //'app-footer':Footer,
     'history' :History,
-    
   }
 
 }
@@ -351,6 +377,7 @@ ul {
     list-style: none; 
     padding:10px 20px 10px 10px;
 }
+
 #consumeBtn {
     border: transparent;
     padding: 8px;
@@ -359,13 +386,28 @@ ul {
     position:relative;
     margin-left: 25px;
 }
+.red1:hover {
+  background-color: #af5765;
+}
 .red1{
   background: #ea7186;
+}
+.yellow1:hover {
+  background-color: #e4ab3b;
 }
 .yellow1{ 
   background: #f2c76e; 
   }
+.green1:hover {
+  background-color: #68854c;
+}
 .green1{ 
   background:  #9bc472; 
   }
+.addToCalendar:hover {
+  background-color: #4897af;
+}
+.addToCalendar {
+  background:  #5dc4e4; 
+}
 </style>
