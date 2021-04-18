@@ -21,20 +21,15 @@ export default {
     color: #2c3e50;
 }
 
-#nav {
-    padding: 30px;
+html, body, div, header{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
 }
+/* HTML5 display-role reset for older browsers */
 
-#nav a {
-    font-weight: bold;
-    color: #2c3e50;
-}
 
-#nav a.router-link-exact-active {
-    color: #42b983;
-}
-
-input {
-    margin-right: 20px;
-}
 </style>
