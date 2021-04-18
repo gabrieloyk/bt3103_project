@@ -11,7 +11,7 @@
             <div style="display:inline">
             <div id="itemName" v-show="item.daysToExpiry==0">{{ item.name }} is expiring on {{item.expiry}} which is today. <b>Please Consume It By Today! </b> </div>
             <div id="itemName" v-show="item.daysToExpiry==1">{{ item.name }} is expiring on {{item.expiry}} which is tomorrow. <b>Please Consume It ASAP! </b> </div>
-            <div id="itemName" v-show="items.daysToExpiry>1">{{ item.name }} is expiring on {{item.expiry}} in {{item.daysToExpiry}} days <b>Please Consume It Soon! </b> </div>
+            <div id="itemName" v-show="item.daysToExpiry>1">{{ item.name }} is expiring on {{item.expiry}} in {{item.daysToExpiry}} days <b>Please Consume It Soon!  </b> </div>
             <div> <button class="red1" id="consumeBtn" v-on:click="consumed(item.id)"> <b>Consume</b> </button>
            <button class="addToCalendar" id="consumeBtn" v-on:click="addToCalendar(item.expireddate.toDate(), item.name)"> <b>Add To Calendar</b> </button> </div>
             </div>
@@ -166,14 +166,22 @@ export default {
             item.id=doc.id
             item.expiry = doc.data().expireddate.toDate().toString().substring(0,15)
             item.daysToExpiry = this.datediff(today, item.expireddate.toDate())
-            
             if((!item.consumed) && (!item.expired)) {
               if (this.datediff(today, item.expireddate.toDate()) <= 3) {
               this.threedays.push(item)
+              console.log("DEBUG")
+            console.log(item.name)
+            console.log(item.daysToExpiry >1)
             } else if (this.datediff(today,item.expireddate.toDate()) <= 7) {
               this.oneweek.push(item)
+              console.log("DEBUG")
+            console.log(item.name)
+            console.log(item.daysToExpiry)
             } else {
               this.items.push(item)  
+              console.log("DEBUG")
+            console.log(item.name)
+            console.log(item.daysToExpiry)
             }
             } 
             })      })  
@@ -186,6 +194,7 @@ export default {
                 this.imgsrc = doc.data().imgfile
                 console.log(doc.id, " => ", doc.data());
         });
+       
     })
       },
       removeFile() {
