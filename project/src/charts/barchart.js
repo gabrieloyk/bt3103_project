@@ -49,6 +49,8 @@ export default {
       firebase.firestore().collection('foods').where("userID","==",firebase.auth().currentUser.uid)
       .get().then((querySnapShot)=>{
         let item={}
+        this.monthly_expense = [0,0,0,0]
+        this.expired_expense = [0,0,0,0]
         querySnapShot.forEach(doc=>{
             var today = new Date()
             item=doc.data()
@@ -93,6 +95,8 @@ export default {
                 }
             } 
           })
+            console.log("BUG")
+            console.log(this.monthly_expense)
             this.nonexpired_expense[0] = this.monthly_expense[0]-this.expired_expense[0]
             this.nonexpired_expense[1] = this.monthly_expense[1]-this.expired_expense[1]
             this.nonexpired_expense[2] = this.monthly_expense[2]-this.expired_expense[2]

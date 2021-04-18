@@ -37,16 +37,16 @@
         </div>
         <button class="open-button" v-on:click="openForm()">Create New Food</button>
         <div class="form-popup" id="myForm">
-          <form class="form-container">
+          <form class="form-container" method = "addToFirebase" novalidate>
             <h2>What food do you want to add?</h2>
             <label for="name"><b>Name of grocery:</b></label>
-            <input v-model="name" type="text" placeholder="Enter food name" ><br>
+            <input v-model="name" type="text" placeholder="Enter food name" required><br>
 
             <label for="expireddate"><b>Expiry Date:</b></label>
-            <input v-model="expireddate" type="date"><br><br>
+            <input v-model="expireddate" type="date" required><br><br>
 
             <label for="price"><b>Price:</b></label>
-            <span> $ <input v-model.number="price" type="number" min="0.00" max="10000.00" step="0.01" />
+            <span> $ <input v-model.number="price" type="number" min="0.00" max="10000.00" step="0.01" required>
             </span><br><br>
             
             <select v-model="category">
@@ -61,10 +61,8 @@
             </select>
             <label for="imgfilename"><b>Upload Image:</b></label>
             <upload-pics ref="uploadfood" v-on:addsrc="addImageSrc"></upload-pics>
-
-            <button type="submit" class="btn" v-on:click.prevent="addToFirebase()">Add</button>
+            <input type="submit" class="btn" v-on:click.prevent="addToFirebase()" value="Add">
             <button type="button" class="btn cancel" v-on:click="closeForm()">Close</button>
-            <button v-on:click.prevent="addToCalendar()"> Add to Calendar </button>
           </form>
           </div>
         </div>
@@ -114,6 +112,15 @@ export default {
         //to check if user inputted an expired food
         if(new Date(this.expireddate) - today +  1000 * 60 * 60 * 16 < 0 ) {this.expired=true} 
         const foodRef = firebase.firestore().collection('foods')
+        if(this.name == "") {
+          alert("Please fill in the food name")
+        } else if(this.expireddate == "") {
+          alert("Please fill in the expiry date")
+        } else if(this.price == "") {
+          alert("Please fill in the price")
+        } else if(this.category =="") {
+          alert("Please choose a food category")
+        } else {
         foodRef.add(
           {
             name:this.name,
@@ -128,7 +135,7 @@ export default {
             expired: this.expired,
             consumedDate: new Date(),
             consumedBy:"",
-          },
+          }
         )
         this.removeFile();
         this.name=''
@@ -139,7 +146,8 @@ export default {
         this.submitted = true
         this.snackbar = false
         this.expired = false
-      },
+      }
+    },
       datediff:function(date1,date2) {
           const _MS_PER_DAY = 1000 * 60 * 60 * 24;
         // Discard the time and time-zone information.
