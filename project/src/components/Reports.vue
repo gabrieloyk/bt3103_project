@@ -12,7 +12,6 @@
           <bar-chart></bar-chart>
           <pie-contributor></pie-contributor>
         </div>
-        <app-footer></app-footer>
     </div>
 </template>
 
@@ -25,7 +24,7 @@ import PieChart from '../charts/PieChart.vue';
 import BarChart from '../charts/BarChart.vue';
 import Doughnut from '../charts/Doughnut.vue';
 import PieContributor from '../charts/PieContributor.vue';
-import Footer from '../components/Footer.vue'
+
 
 export default {
  data(){
@@ -44,7 +43,6 @@ export default {
     'bar-chart': BarChart,
     'doughnut':Doughnut,
     'pie-contributor':PieContributor,
-    'app-footer':Footer,
   },
   created(){
       this.currentuser = this.$store.state.user.username  

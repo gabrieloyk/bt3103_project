@@ -66,7 +66,6 @@
           </form>
           </div>
         </div>
-        <app-footer></app-footer>
     </div>
 </template>
 
@@ -77,7 +76,6 @@ import Header from '../components/Header.vue';
 import firebase from 'firebase/app';
 import UploadPics from '../components/UploadPics.vue';
 import History from '../components/History.vue';
-import Footer from '../components/Footer.vue'
 
 
 export default {
@@ -253,7 +251,6 @@ export default {
   components:{
     'app-header':Header,
     'upload-pics':UploadPics,
-    'app-footer':Footer,
     'history' :History,
   }
 
@@ -284,7 +281,7 @@ export default {
   cursor: pointer;
   opacity: 0.9;
   position: fixed;
-  bottom: 50px;
+  bottom: 15px;
   right: 28px;
   width: 280px;
 }
