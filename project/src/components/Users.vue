@@ -4,11 +4,14 @@
     <h2>Select User</h2>
     <div class="familyDiv" v-for="member in family" :key="member[0]">
       <button class="btn" v-on:click="currentuser = member[1].username, select()" v-bind:style="{ 'background-image': 'url(' + member[1].imgfile + ')',
-      'background-size':'cover','background-position':'center'}">
-        <h2 style="color:white; float:center">{{member[1].username}}</h2>
+      'background-size':'cover','background-position':'center', 'float': 'center'}">
         </button>
+        <h2 style="color:gray; float:center">{{member[1].username}}</h2>
       </div>
+      <div>
       <button class="open-button" v-on:click="openForm()">+</button>
+      <h2 style="color:gray; float:center">Add New User</h2>
+      </div>
         <div class="form-popup" id="myForm">
           <form class="form-container">
             <h2>New User of Expired?</h2>
@@ -33,7 +36,7 @@ export default {
     data() {
         return {
           username:"",
-          imgfile:"",
+          imgfile:"https://www.worldfuturecouncil.org/wp-content/uploads/2020/06/blank-profile-picture-973460_1280-1.png",
           family: [],
           currentuser:""
         };
@@ -130,7 +133,7 @@ export default {
         background-image: url('https://images.theconversation.com/files/282104/original/file-20190701-105182-1q7a7ji.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=900.0&fit=crop');
         background-repeat: no-repeat;
         background-size: 100% 100%;
-        height:100vh;
+        height:150vh;
         padding: 20px 20px;
     }
     button {
@@ -172,7 +175,7 @@ export default {
       display: inline-block;
       justify-content: center;
       align-items:center;
-      flex-wrap: wrap;
+      
     }
 
     .familyDiv .btn {
@@ -185,7 +188,6 @@ export default {
       border:none;
       outline:none;
       margin-top: 2;
-      margin-right:2.5rem;
       position: relative;
       cursor: pointer;
       background-repeat:no-repeat;
