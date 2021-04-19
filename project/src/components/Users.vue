@@ -75,6 +75,7 @@ export default {
           }
           document.getElementById("myForm").style.display = "none";
           this.username = ''
+          this.imgfile = "https://www.worldfuturecouncil.org/wp-content/uploads/2020/06/blank-profile-picture-973460_1280-1.png"
         })
         this.removeFile();
         /*const snapShot = foodRef.doc(userid).collection('family').doc(this.username).get();
