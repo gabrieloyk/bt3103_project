@@ -48,6 +48,8 @@ export default {
                     }
                     alert("Please check your email for verification!")
                     user.sendEmailVerification(actionCodeSettings);
+                    
+                    alert("Register!")
                     //alert('Successfully registered! Please login.');
                     //this.$router.push('/');
                 })

@@ -27,6 +27,7 @@
           <li class="green" id="list" v-for="item in items" :key="item.id" v-show="!item.consumed">
             <div style="display:inline">
             <div id="itemName" v-show="Math.floor(item.daysToExpiry/7) <= 1 && item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7) <= 1 ">{{ item.name }} is expiring on {{item.expiry}} in {{Math.floor(item.daysToExpiry/7)}} week and {{item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7)}} day </div>
+            <div id="itemName" v-show="Math.floor(item.daysToExpiry/7) <= 1 && item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7) > 1 ">{{ item.name }} is expiring on {{item.expiry}} in {{Math.floor(item.daysToExpiry/7)}} week and {{item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7)}} days </div>
             <div id="itemName" v-show="Math.floor(item.daysToExpiry/7) > 1 && item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7) <= 1 ">{{ item.name }} is expiring on {{item.expiry}} in {{Math.floor(item.daysToExpiry/7)}} weeks and {{item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7)}} day </div>
             <div id="itemName" v-show="Math.floor(item.daysToExpiry/7) > 1 && item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7) > 1 ">{{ item.name }} is expiring on {{item.expiry}} in {{Math.floor(item.daysToExpiry/7)}} weeks and {{item.daysToExpiry - 7*Math.floor(item.daysToExpiry/7)}} days </div>
             <div> <button class="green1" id="consumeBtn" v-on:click="consumed(item.id)"> <b>Consume</b> </button> 

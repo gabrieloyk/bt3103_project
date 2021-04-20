@@ -46,6 +46,11 @@ export default {
                 .signInWithEmailAndPassword(this.email, this.password)
                 .then(() => {
                     if(firebase.auth().currentUser.emailVerified) {
+                        
+                        firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).set({
+                        email:this.email,
+                        password:this.password
+                    })
                         alert('Successfully logged in');
                         this.$router.push('/users');
                     } else {
